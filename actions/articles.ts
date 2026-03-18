@@ -31,7 +31,7 @@ export async function createArticle(formData: FormData) {
 
   const parsed = ArticleSchema.safeParse(raw);
   if (!parsed.success) {
-    return { error: parsed.error.errors[0].message };
+    throw new Error(parsed.error.errors[0].message);
   }
 
   const slug = generateSlug(raw.title);
@@ -65,7 +65,7 @@ export async function updateArticle(id: string, formData: FormData) {
 
   const parsed = ArticleSchema.safeParse(raw);
   if (!parsed.success) {
-    return { error: parsed.error.errors[0].message };
+    throw new Error(parsed.error.errors[0].message);
   }
 
   await db.article.update({
