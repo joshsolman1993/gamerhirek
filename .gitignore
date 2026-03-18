@@ -1,0 +1,37 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# next.js
+.next/
+out/
+
+# production
+build/
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# env files — SOHA ne commitold ezeket!
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# prisma
+prisma/*.db
+prisma/*.db-journal
+
+# turbopack
+.turbopack/
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
