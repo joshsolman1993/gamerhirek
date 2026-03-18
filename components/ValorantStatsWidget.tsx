@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import type { PlayerStatsResult } from "@/lib/valorant-types";
 
@@ -389,7 +389,7 @@ export function ValorantStatsWidget() {
               {/* Title */}
               {stats.account.title && (
                 <p style={{ fontSize: "0.875rem", color: "var(--color-esport-teal)", marginBottom: "0.625rem", fontStyle: "italic" }}>
-                  „{stats.account.title}"
+                  „{stats.account.title}&quot;
                 </p>
               )}
 

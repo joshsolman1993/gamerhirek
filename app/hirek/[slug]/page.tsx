@@ -223,7 +223,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
           {/* Comment section */}
           <CommentSection
             articleId={article.id}
-            initialComments={[]}
+            initialComments={comments}
           />
         </article>
 

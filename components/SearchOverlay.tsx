@@ -1,8 +1,7 @@
 "use client";
 
-import { useState, useEffect, useRef, useTransition } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 
 interface SearchResult {
   id: string;
@@ -178,7 +177,7 @@ export function SearchOverlay() {
                 </Link>
               )) : query.length >= 2 && !loading ? (
                 <p style={{ padding: "2rem 1.25rem", color: "var(--color-site-muted)", textAlign: "center", fontFamily: "var(--font-display)" }}>
-                  Nincs találat: „{query}"
+                  Nincs találat: „{query}&quot;
                 </p>
               ) : (
                 <p style={{ padding: "1.5rem 1.25rem", color: "var(--color-site-muted)", fontSize: "0.8125rem", textAlign: "center" }}>

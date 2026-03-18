@@ -135,7 +135,7 @@ export async function GET(req: Request) {
       })
       .filter((m) => m.player);
 
-    let totalKills = 0, totalDeaths = 0, totalAssists = 0;
+    let totalKills = 0, totalDeaths = 0;
     let totalHead  = 0, totalBody   = 0, totalLeg     = 0;
     let totalScore = 0, wins = 0;
     const agentMap: Record<string, { games: number; wins: number; kills: number; deaths: number; img: string }> = {};
@@ -145,7 +145,6 @@ export async function GET(req: Request) {
       const s = player.stats;
       totalKills   += s.kills;
       totalDeaths  += s.deaths;
-      totalAssists += s.assists;
       totalHead    += s.shots?.head ?? 0;
       totalBody    += s.shots?.body ?? 0;
       totalLeg     += s.shots?.leg  ?? 0;
