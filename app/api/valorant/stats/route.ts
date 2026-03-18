@@ -8,18 +8,25 @@ import type {
 } from "@/lib/valorant-types";
 
 const HENRIK_BASE = "https://api.henrikdev.gg";
-const API_KEY = process.env.HENRIK_API_KEY ?? "";
-
-const fetchHeaders: Record<string, string> = {
-  Accept: "application/json",
-  ...(API_KEY ? { Authorization: API_KEY } : {}),
-};
 
 async function hGet<T>(path: string): Promise<{ data: T; status: number }> {
+  const apiKey = process.env.HENRIK_API_KEY ?? "";
+  
+  const headers: Record<string, string> = {
+    Accept: "application/json",
+    ...(apiKey ? { Authorization: apiKey } : {}),
+  };
+
   const res = await fetch(`${HENRIK_BASE}${path}`, {
-    headers: fetchHeaders,
+    headers,
     next: { revalidate: 120 },
   });
+
+  const contentType = res.headers.get("content-type");
+  if (!contentType || !contentType.includes("application/json")) {
+    throw new Error(`Non-JSON response (status: ${res.status})`);
+  }
+
   const json = await res.json();
   return { data: json.data ?? json, status: json.status ?? res.status };
 }
@@ -202,7 +209,7 @@ export async function GET(req: Request) {
     return NextResponse.json(
       {
         error: isNetworkErr
-          ? "Az API szerver nem érhető el. Helyi fejlesztői környezetben ez előfordulhat — próbáld ki éles szerveren (Vercel stb.)!"
+          ? "Az API szerver hálózati szinten nem érhető el. Próbáld meg később vagy használd a Demo adatokat!"
           : "Az API jelenleg nem elérhető, próbáld újra!",
       },
       { status: 503 }
