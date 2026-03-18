@@ -7,7 +7,7 @@ import type {
   MatchPlayer,
 } from "@/lib/valorant-types";
 
-const HENRIK_BASE = "https://api.henrikdev.gg";
+const HENRIK_BASE = "https://api.henrikdev.xyz";
 
 async function hGet<T>(path: string): Promise<{ data: T; status: number }> {
   const apiKey = process.env.HENRIK_API_KEY ?? "";
