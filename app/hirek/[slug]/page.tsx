@@ -5,6 +5,7 @@ import { getArticleBySlug, getArticles } from "@/lib/dal";
 import { formatDate } from "@/lib/utils";
 import { ArticleCard } from "@/components/ArticleCard";
 import { CommentSection } from "@/components/CommentSection";
+import { NewsletterForm } from "@/components/NewsletterForm";
 import { db } from "@/lib/db";
 import type { Metadata } from "next";
 
@@ -218,6 +219,11 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
                 />
               );
             })}
+          </div>
+
+          {/* Newsletter Banner */}
+          <div style={{ margin: "4rem 0" }}>
+            <NewsletterForm />
           </div>
 
           {/* Comment section */}
