@@ -172,9 +172,9 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
             {contentLines.map((line, i) => {
               if (line.startsWith("# "))
                 return (
-                  <h1 key={i} style={{ fontSize: "2rem", marginTop: "2.5rem" }}>
+                  <h2 key={i} style={{ fontSize: "2rem", marginTop: "2.5rem" }}>
                     {line.slice(2)}
-                  </h1>
+                  </h2>
                 );
               if (line.startsWith("## "))
                 return (

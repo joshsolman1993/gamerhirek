@@ -13,7 +13,15 @@ export async function generateMetadata({ params }: MapPageProps): Promise<Metada
   const { map } = await params;
   const mapData = await getMapById(map);
   if (!mapData) return { title: "Térkép nem található | GamerHírek" };
-  return { title: `${mapData.name} - Valorant Térkép Útmutató | GamerHírek` };
+  return { 
+    title: `${mapData.name} - Valorant Térkép Útmutató | GamerHírek`,
+    description: mapData.description,
+    openGraph: {
+      title: `${mapData.name} - Valorant Térkép Útmutató | GamerHírek`,
+      description: mapData.description,
+      type: "website",
+    }
+  };
 }
 
 export async function generateStaticParams() {

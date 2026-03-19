@@ -5,8 +5,13 @@ import { Map, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Valorant Interaktív Térképek | GamerHírek",
-  description: "Részletes, interaktív Valorant térkép útmutatók calloutokkal és taktikákkal.",
+  title: "Térkép Útmutatók | GamerHírek",
+  description: "Ismerd meg az összes Valorant pályát stratégiai szinten. Lineupok, védekezési pontok és entry tippek.",
+  openGraph: {
+    title: "Térkép Útmutatók | GamerHírek",
+    description: "Ismerd meg az összes Valorant pályát stratégiai szinten. Lineupok, védekezési pontok és entry tippek.",
+    type: "website",
+  },
 };
 
 export default async function MapsDirectoryPage() {

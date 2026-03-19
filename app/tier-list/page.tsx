@@ -3,8 +3,13 @@ import { ListTree } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Ágens Tier List Builder | GamerHírek",
-  description: "Állítsd össze a saját Valorant ágens tier listedet és oszd meg a barátaiddal!",
+  title: "Ügynök Tier List | GamerHírek",
+  description: "Aktuális Valorant Agent Tier List a jelenlegi metára szabva. Tudd meg, kivel érdemes mászni a ranglétrán!",
+  openGraph: {
+    title: "Ügynök Tier List | GamerHírek",
+    description: "Aktuális Valorant Agent Tier List a jelenlegi metára szabva. Tudd meg, kivel érdemes mászni a ranglétrán!",
+    type: "website",
+  },
 };
 
 export default function TierListPage() {

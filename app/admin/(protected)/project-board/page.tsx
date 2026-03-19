@@ -52,6 +52,7 @@ const phases: { phase: string; title: string; color: string; milestones: Milesto
       { title: "Esports Fantasy Pick'em", description: "VCT meccs jóslatok, felhasználói XP gyűjtéssel és gamification integrációval.", status: "done", icon: <CheckCircle2 size={18} /> },
       { title: "Keresek Csapatot (LFG)", description: "Valós idejű Valorant csapattárs-kereső fórum optimista UI-jal.", status: "done", icon: <Rocket size={18} /> },
       { title: "Discord Webhook", description: "Automatikus formázott üzenetküldés a Discord közösségi szerveren cikkpublikáláskor.", status: "done", icon: <ShieldCheck size={18} /> },
+      { title: "UX & SEO Audit", description: "A rendszer teljes körű felülvizsgálata, frontend teljesítmény optimalizálása és keresőoptimalizálás Meta címkékkel.", status: "done", icon: <CheckCircle2 size={18} /> },
     ]
   }
 ];

@@ -12,7 +12,15 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   const categories = await getCategories();
   const cat = categories.find((c) => c.slug === slug);
   if (!cat) return {};
-  return { title: cat.name };
+  return { 
+    title: `${cat.name} | GamerHírek`,
+    description: `A legfrissebb Valorant hírek és cikkek a ${cat.name} kategóriában a GamerHírek oldalán.`,
+    openGraph: {
+      title: `${cat.name} | GamerHírek`,
+      description: `A legfrissebb Valorant hírek és cikkek a ${cat.name} kategóriában a GamerHírek oldalán.`,
+      type: "website",
+    }
+  };
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {

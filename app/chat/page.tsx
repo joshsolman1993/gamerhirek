@@ -7,6 +7,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Globál Kocsma | GamerHírek",
   description: "Beszélgess élőben a többi Valorant játékossal a Globál Kocsmában!",
+  openGraph: {
+    title: "Globál Kocsma | GamerHírek",
+    description: "Beszélgess élőben a többi Valorant játékossal a Globál Kocsmában!",
+    type: "website",
+  },
 };
 
 export default async function ChatPage() {

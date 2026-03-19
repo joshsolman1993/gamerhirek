@@ -9,6 +9,16 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "GamerHírek — Magyar Gaming & Esport Hírek",
+  description: "Magyarország vezető Valorant híroldala. Frissítések, profi meccsek, tippek és közösség.",
+  openGraph: {
+    title: "GamerHírek — Magyar Gaming & Esport Hírek",
+    description: "Magyarország vezető Valorant híroldala. Frissítések, profi meccsek, tippek és közösség.",
+    url: "https://gamerhirek.hu",
+    siteName: "GamerHírek",
+    images: [{ url: "/og-image.jpg", width: 1200, height: 630 }],
+    locale: "hu_HU",
+    type: "website",
+  },
 };
 
 export default async function HomePage() {

@@ -3,8 +3,13 @@ import { ArticleCard } from "@/components/ArticleCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Valorant Patch Notes",
-  description: "Legfrissebb Valorant patch note-ok és frissítések magyar nyelven.",
+  title: "Patch Notes | GamerHírek",
+  description: "Legfrissebb Valorant frissítések, patch note-ok, ügynök és fegyver egyensúly módosítások magyarul.",
+  openGraph: {
+    title: "Patch Notes | GamerHírek",
+    description: "Legfrissebb Valorant frissítések, patch note-ok, ügynök és fegyver egyensúly módosítások magyarul.",
+    type: "website",
+  },
 };
 
 export default async function PatchNotesPage() {

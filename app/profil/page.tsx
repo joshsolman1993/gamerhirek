@@ -9,6 +9,12 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Gamer Profil | GamerHírek",
+  description: "Irányítsd a Valorant profilod. Kövesd nyomon XP-det, kitűzőidet és eddigi hírolvasásaidat magyarul.",
+  openGraph: {
+    title: "Gamer Profil | GamerHírek",
+    description: "Irányítsd a Valorant profilod. Kövesd nyomon XP-det, kitűzőidet és eddigi hírolvasásaidat magyarul.",
+    type: "profile",
+  },
 };
 
 export default async function ProfilPage() {

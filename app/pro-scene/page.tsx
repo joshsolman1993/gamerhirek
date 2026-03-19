@@ -6,8 +6,13 @@ import { ArrowRight, Trophy } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pro Scene Tracker | GamerHírek",
-  description: "Kövesd a VCT EMEA szezont, csapatokat, élő mérkőzéseket és a tabellát.",
+  title: "Profi Színtér | GamerHírek",
+  description: "Kövessd a VCT EMEA, Masters és Champions tornákat. E-sport eredmények, interjúk és Pick'em tippjáték.",
+  openGraph: {
+    title: "Profi Színtér | GamerHírek",
+    description: "Kövessd a VCT EMEA, Masters és Champions tornákat. E-sport eredmények, interjúk és Pick'em tippjáték.",
+    type: "website",
+  },
 };
 
 export default async function ProScenePage() {

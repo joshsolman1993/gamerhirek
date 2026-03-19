@@ -7,7 +7,19 @@ import { hu } from "date-fns/locale";
 import { MessageSquare, MapPin, Mic, MicOff, Medal, Users } from "lucide-react";
 import Image from "next/image";
 
+import type { Metadata } from "next";
+
 export const revalidate = 60; // 1 minute ISR
+
+export const metadata: Metadata = {
+  title: "LFG Fórum | GamerHírek",
+  description: "Keresel valakit rankedre vagy unratedre? Találd meg a megfelelő csapattársat a GamerHírek LFG fórumán!",
+  openGraph: {
+    title: "LFG Fórum | GamerHírek",
+    description: "Keresel valakit rankedre vagy unratedre? Találd meg a megfelelő csapattársat a GamerHírek LFG fórumán!",
+    type: "website",
+  },
+};
 
 export default async function LFGPage() {
   const session = await getSession();

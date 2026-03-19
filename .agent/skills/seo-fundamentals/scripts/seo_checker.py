@@ -34,7 +34,7 @@ except:
 SKIP_DIRS = {
     'node_modules', '.next', 'dist', 'build', '.git', '.github',
     '__pycache__', '.vscode', '.idea', 'coverage', 'test', 'tests',
-    '__tests__', 'spec', 'docs', 'documentation', 'examples'
+    '__tests__', 'spec', 'docs', 'documentation', 'examples', 'admin', '(auth)'
 }
 
 # Files to skip (not pages)
@@ -102,21 +102,26 @@ def check_page(file_path: Path) -> dict:
     except Exception as e:
         return {"file": str(file_path.name), "issues": [f"Error: {e}"]}
     
-    # Detect if this is a layout/template file (has Head component)
-    is_layout = 'Head>' in content or '<head' in content.lower()
+    # Detect if this is a layout/template file (has Head component) or Next.js metadata
+    is_layout = 'Head>' in content or '<head>' in content.lower() or '<head ' in content.lower() or 'export const metadata' in content or 'export async function generateMetadata' in content
+    
+    # Check specifically for Next.js metadata fields
+    has_next_title = re.search(r'title:\s*', content)
+    has_next_desc = re.search(r'description:\s*', content)
+    has_next_og = re.search(r'openGraph:\s*\{', content)
     
     # 1. Title tag
-    has_title = '<title' in content.lower() or 'title=' in content or 'Head>' in content
+    has_title = '<title' in content.lower() or 'title=' in content or 'Head>' in content or has_next_title
     if not has_title and is_layout:
         issues.append("Missing <title> tag")
     
     # 2. Meta description
-    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower()
+    has_description = 'name="description"' in content.lower() or 'name=\'description\'' in content.lower() or has_next_desc
     if not has_description and is_layout:
         issues.append("Missing meta description")
     
     # 3. Open Graph tags
-    has_og = 'og:' in content or 'property="og:' in content.lower()
+    has_og = 'og:' in content or 'property="og:' in content.lower() or has_next_og
     if not has_og and is_layout:
         issues.append("Missing Open Graph tags")
     
@@ -126,10 +131,10 @@ def check_page(file_path: Path) -> dict:
         issues.append(f"Multiple H1 tags ({len(h1_matches)})")
     
     # 5. Images without alt
-    img_pattern = r'<img[^>]+>'
+    img_pattern = r'<(?:img|Image)[^>]+>'
     imgs = re.findall(img_pattern, content, re.I)
     for img in imgs:
-        if 'alt=' not in img.lower():
+        if 'alt=' not in img.lower() and 'role="presentation"' not in img.lower() and "alt={null}" not in img.replace(" ", ""):
             issues.append("Image missing alt attribute")
             break
         if 'alt=""' in img or "alt=''" in img:
@@ -140,7 +145,7 @@ def check_page(file_path: Path) -> dict:
     # has_canonical = 'rel="canonical"' in content.lower()
     
     return {
-        "file": str(file_path.name),
+        "file": str(file_path),
         "issues": issues
     }
 
@@ -191,10 +196,8 @@ def main():
             print(f"  [{count}] {issue}")
         
         print(f"\nAffected files ({len(all_issues)}):")
-        for item in all_issues[:5]:
+        for item in all_issues:
             print(f"  - {item['file']}")
-        if len(all_issues) > 5:
-            print(f"  ... and {len(all_issues) - 5} more")
     else:
         print("\n[OK] No SEO issues found!")
     

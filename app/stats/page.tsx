@@ -2,8 +2,13 @@ import { ValorantStatsWidget } from "@/components/ValorantStatsWidget";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Valorant Stats — GamerHírek",
-  description: "Nézd meg a Valorant rankedet, K/D arányodat, win rate-edet és legjobb ágenseidet. Írd be a neved és a taget!",
+  title: "Statisztikák | GamerHírek",
+  description: "Részletes Valorant ügynök és fegyver statisztikák, win rate-ek és meta elemzések.",
+  openGraph: {
+    title: "Statisztikák | GamerHírek",
+    description: "Részletes Valorant ügynök és fegyver statisztikák, win rate-ek és meta elemzések.",
+    type: "website",
+  },
 };
 
 export default function StatsPage() {

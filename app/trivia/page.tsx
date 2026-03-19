@@ -7,8 +7,13 @@ import { QuizPlayer } from "./QuizPlayer";
 import { getActiveQuiz } from "@/actions/trivia";
 
 export const metadata: Metadata = {
-  title: "Valorant Trivia (Napi Kvíz) | GamerHírek",
-  description: "Tedd próbára a tudásodat a napi Valorant Trivia kvízekben és szerezz jutalom XP-t!",
+  title: "Valorant Tízes Kvíz | GamerHírek",
+  description: "Tedd próbára tudásod a napi Valorant kvízben! Szerezz XP-t, és lépj szintet a profilodon.",
+  openGraph: {
+    title: "Valorant Tízes Kvíz | GamerHírek",
+    description: "Tedd próbára tudásod a napi Valorant kvízben! Szerezz XP-t, és lépj szintet a profilodon.",
+    type: "website",
+  },
 };
 
 export default async function TriviaPage() {
@@ -20,9 +25,9 @@ export default async function TriviaPage() {
     return (
       <div style={{ margin: "0 auto", padding: "3rem 1.5rem", maxWidth: "800px", textAlign: "center" }}>
         <Brain size={48} style={{ margin: "0 auto 1.5rem", color: "var(--color-site-muted)" }} />
-        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", textTransform: "uppercase" }}>
+        <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "2rem", textTransform: "uppercase" }}>
           Jelenleg Nincs Kvíz
-        </h1>
+        </h2>
         <p style={{ color: "var(--color-site-muted)", marginTop: "1rem" }}>
           Nézz vissza később a legújabb Valorant tudáspróbáért!
         </p>

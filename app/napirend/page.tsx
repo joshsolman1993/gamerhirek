@@ -8,8 +8,13 @@ import Image from "next/image";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Napirend | GamerHírek",
-  description: "A te napi gamer adagod: szavazások, esports menetrend és exkluzív tippek minden napra.",
+  title: "Night Market & Események | GamerHírek",
+  description: "Minden Valorant esemény, VCT meccs és Night Market dátum egy helyen. Ne maradj le a legfontosabbakról!",
+  openGraph: {
+    title: "Night Market & Események | GamerHírek",
+    description: "Minden Valorant esemény, VCT meccs és Night Market dátum egy helyen. Ne maradj le a legfontosabbakról!",
+    type: "website",
+  },
 };
 
 export default async function NapirendPage() {
