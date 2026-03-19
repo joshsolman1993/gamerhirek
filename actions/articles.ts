@@ -36,7 +36,7 @@ export async function createArticle(formData: FormData) {
 
   const slug = generateSlug(raw.title);
 
-  await db.article.create({
+  const newArticle = await db.article.create({
     data: {
       ...parsed.data,
       featured: parsed.data.featured ?? false,
@@ -44,6 +44,39 @@ export async function createArticle(formData: FormData) {
       authorId: session.id,
     },
   });
+
+  // Discord Webhook Integration
+  if (process.env.DISCORD_WEBHOOK_URL) {
+    try {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000");
+      
+      await fetch(process.env.DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          content: "🚀 **Új cikk jelent meg a GamerHíreken!**",
+          embeds: [
+            {
+              title: newArticle.title,
+              description: newArticle.excerpt,
+              url: `${appUrl}/hirek/${newArticle.slug}`,
+              color: 16729685, // #FF4655 (Var(--color-val-red))
+              image: {
+                url: newArticle.coverImage,
+              },
+              footer: {
+                text: "GamerHírek.hu - A Magyar Gamerek Otthona",
+              },
+              timestamp: new Date().toISOString()
+            }
+          ]
+        })
+      });
+    } catch (err) {
+      console.error("Failed to send Discord webhook:", err);
+      // We don't fail the article creation if webhook fails
+    }
+  }
 
   revalidatePath("/");
   revalidatePath("/admin");

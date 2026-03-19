@@ -1,5 +1,6 @@
 import { ValorantStatsWidget } from "@/components/ValorantStatsWidget";
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Valorant Stats — GamerHírek",
@@ -50,6 +51,11 @@ export default function StatsPage() {
         }}>
           Nézd meg az aktuális rankedet, K/D arányodat, win rate-et és legjobb ágenseidet az elmúlt 10 competitive meccsből.
         </p>
+        <div style={{ marginTop: "1.5rem" }}>
+          <Link href="/stats/history" style={{ display: "inline-flex", alignItems: "center", gap: "0.5rem", background: "rgba(0, 196, 180, 0.1)", border: "1px solid var(--color-esport-teal)", color: "var(--color-esport-teal)", padding: "0.75rem 1.5rem", borderRadius: "4px", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.875rem", textTransform: "uppercase", textDecoration: "none", transition: "all 0.2s ease" }}>
+            Mélyebb Elemzés: Match History &rarr;
+          </Link>
+        </div>
       </div>
 
       {/* Widget */}

@@ -57,6 +57,8 @@ export async function Navbar() {
             { href: "/terkep-guides", label: "🗺️ Térképek", highlight: true },
             { href: "/napirend", label: "🗓️ Napirend", highlight: true },
             { href: "/pro-scene", label: "🏆 Pro Scene", highlight: true },
+            { href: "/pro-scene/pickem", label: "🔮 Pick'em", highlight: true },
+            { href: "/lfg", label: "💬 LFG", highlight: true },
             { href: "/stats", label: "📊 Stats", highlight: true },
           ].map((item) => (
             <Link

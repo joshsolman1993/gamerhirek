@@ -20,6 +20,8 @@ model User {
   avatarUrl    String? // Gamification: User profile pic
   articles     Article[]
   achievements UserAchievement[]
+  predictions  Prediction[]
+  lfgPosts     LFGPost[]
 }
 
 model Achievement {
@@ -119,4 +121,45 @@ model PollOption {
   votes  Int    @default(0)
   pollId String
   poll   Poll   @relation(fields: [pollId], references: [id], onDelete: Cascade)
+}
+
+model Match {
+  id        String   @id @default(cuid())
+  teamA     String
+  teamB     String
+  teamALogo String?
+  teamBLogo String?
+  startTime DateTime
+  format    String   @default("BO3")
+  winner    String?  // Can be null if match hasn't finished, or the name of the winning team
+  status    String   @default("SCHEDULED") // SCHEDULED, LIVE, COMPLETED
+  
+  predictions Prediction[]
+}
+
+model Prediction {
+  id              String   @id @default(cuid())
+  userId          String
+  matchId         String
+  predictedWinner String
+  claimed         Boolean  @default(false)
+  createdAt       DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  match Match @relation(fields: [matchId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, matchId]) // A user can only predict a match once
+}
+
+model LFGPost {
+  id        String   @id @default(cuid())
+  userId    String
+  content   String
+  rank      String   @default("Unranked")
+  roles     String   @default("Any")
+  server    String   @default("Frankfurt")
+  mic       Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
