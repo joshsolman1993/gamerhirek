@@ -63,7 +63,11 @@ export default async function AdminLayout({
             { href: "/admin", label: "Dashboard", icon: "⬡" },
             { href: "/admin/project-board", label: "Fejlesztési Terv", icon: "⚑" },
             { href: "/admin/articles", label: "Cikkek", icon: "≡" },
-            { href: "/admin/articles/new", label: "Új cikk", icon: "+" },
+            { href: "/admin/metadata", label: "Kategóriák", icon: "❖" },
+            { href: "/admin/matches", label: "Pick'em Meccsek", icon: "⚔" },
+            { href: "/admin/quiz", label: "Napi Kvíz", icon: "❓" },
+            { href: "/admin/users", label: "Felhasználók", icon: "👥" },
+            { href: "/admin/moderation", label: "Moderáció", icon: "🛡️" },
             { href: "/", label: "← Vissza az oldalra", icon: "" },
           ].map((item) => (
             <Link

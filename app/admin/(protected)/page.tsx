@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 import { formatDate } from "@/lib/utils";
+import { AnalyticsDashboard } from "@/components/admin/AnalyticsDashboard";
 
 export default async function AdminDashboard() {
-  const [articleCount, categoryCount, articles] = await Promise.all([
+  const [articleCount, categoryCount, articles, usersRecent, categoriesDb] = await Promise.all([
     db.article.count(),
     db.category.count(),
     db.article.findMany({
@@ -14,7 +15,48 @@ export default async function AdminDashboard() {
         author: { select: { name: true } },
       },
     }),
+    db.user.findMany({
+      where: {
+        createdAt: {
+          gte: new Date(new Date().setDate(new Date().getDate() - 6)),
+        },
+      },
+      select: { createdAt: true },
+    }),
+    db.category.findMany({
+      include: { _count: { select: { articles: true } } },
+    }),
   ]);
+
+  // Aggregate user stats
+  const userStatsDict: Record<string, number> = {};
+  const today = new Date();
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    userStatsDict[d.toISOString().split("T")[0]] = 0;
+  }
+
+  usersRecent.forEach((u) => {
+    const dStr = u.createdAt.toISOString().split("T")[0];
+    if (userStatsDict[dStr] !== undefined) {
+      userStatsDict[dStr]++;
+    }
+  });
+
+  const userStatsArray = Object.keys(userStatsDict).map((k) => ({
+    date: k.split("-").slice(1).join("/"),
+    count: userStatsDict[k],
+  }));
+
+  // Aggregate category stats
+  const categoryStatsArray = categoriesDb
+    .map((c) => ({
+      name: c.name,
+      count: c._count.articles,
+      color: c.color,
+    }))
+    .sort((a, b) => b.count - a.count);
 
   return (
     <div>
@@ -99,6 +141,8 @@ export default async function AdminDashboard() {
           </div>
         ))}
       </div>
+
+      <AnalyticsDashboard userStats={userStatsArray} categoryStats={categoryStatsArray} />
 
       {/* Articles table */}
       <div
