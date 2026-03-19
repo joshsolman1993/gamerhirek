@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { calculateLevel } from "@/lib/xp";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Trophy, Star, Shield, Activity, Calendar, LogOut } from "lucide-react";
+import { Trophy, Shield, Activity, Calendar, LogOut } from "lucide-react";
 import { userLogoutAction } from "@/actions/user-auth";
 import type { Metadata } from "next";
 

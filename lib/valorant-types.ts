@@ -112,6 +112,8 @@ export interface PlayerStatsResult {
       kills: number;
       deaths: number;
       assists: number;
+      score: number;
+      headshots: number;
       agent: string;
       agentImg: string;
       mmrChange: number;

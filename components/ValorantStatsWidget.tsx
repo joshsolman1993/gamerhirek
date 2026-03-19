@@ -3,6 +3,7 @@
 import { useState, useRef } from "react";
 import Image from "next/image";
 import type { PlayerStatsResult } from "@/lib/valorant-types";
+import { XAxis, YAxis, CartesianGrid, Tooltip as RechartsTooltip, ResponsiveContainer, AreaChart, Area } from "recharts";
 
 // Rank tier colors and display names
 const TIER_CONFIG: Record<number, { name: string; color: string; bg: string }> = {
@@ -152,6 +153,25 @@ function MatchRow({ m }: {
   );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const CustomTooltip = ({ active, payload }: any) => {
+  if (active && payload && payload.length) {
+    const data = payload[0].payload;
+    return (
+      <div style={{ background: "rgba(15,25,35,0.95)", border: "1px solid var(--color-site-border)", padding: "1rem", borderRadius: "8px", boxShadow: "0 10px 25px rgba(0,0,0,0.5)" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
+          <Image src={data.agentIcon} alt={data.agent} width={24} height={24} style={{ borderRadius: "50%" }} />
+          <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, textTransform: "uppercase", color: "var(--color-site-white)" }}>{data.map}</span>
+        </div>
+        <div style={{ color: "var(--color-esport-teal)", fontWeight: 700, fontSize: "0.875rem", marginBottom: "0.25rem" }}>Kills: {data.kills}</div>
+        <div style={{ color: "var(--color-val-red)", fontWeight: 700, fontSize: "0.875rem", marginBottom: "0.25rem" }}>Deaths: {data.deaths}</div>
+        <div style={{ color: "var(--color-site-muted)", fontSize: "0.75rem" }}>KDA: {data.kda}</div>
+      </div>
+    );
+  }
+  return null;
+};
+
 // ─── Main Component ───────────────────────────────────────────────────────────
 
 export function ValorantStatsWidget() {
@@ -200,6 +220,12 @@ export function ValorantStatsWidget() {
 
   const tier = stats?.mmr?.current_data ? getTier(stats.mmr.current_data.currenttier) : null;
   const rankImg = stats?.mmr?.current_data?.images?.large;
+
+  const chartData = stats ? [...stats.computed.recentMatches].reverse().map((m, idx) => ({
+    ...m,
+    matchNum: `M${stats.computed.recentMatches.length - idx}`,
+    kda: m.deaths ? ((m.kills + m.assists) / m.deaths).toFixed(2) : (m.kills + m.assists).toFixed(2)
+  })) : [];
 
   return (
     <div>
@@ -518,6 +544,36 @@ export function ValorantStatsWidget() {
                   <MatchRow key={m.id} m={m} />
                 ))
               )}
+            </div>
+          </div>
+
+          {/* ─── Main Chart (Match History) ─── */}
+          <div style={{ marginTop: "1.5rem", background: "var(--color-site-card)", border: "1px solid var(--color-site-border)", padding: "2rem", borderRadius: "12px", boxShadow: "0 25px 50px -12px rgba(0,0,0,0.5)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "2rem" }}>
+              <div style={{ width: "24px", height: "24px", background: "var(--color-esport-teal)", mask: "url('data:image/svg+xml;utf8,<svg viewBox=\"0 0 24 24\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/></svg>') center/contain no-repeat" }} />
+              <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.5rem", textTransform: "uppercase", margin: 0 }}>Teljesítmény Trendek (K/D)</h2>
+            </div>
+            <div style={{ height: "400px", width: "100%" }}>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                  <defs>
+                    <linearGradient id="colorKills" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--color-esport-teal)" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="var(--color-esport-teal)" stopOpacity={0}/>
+                    </linearGradient>
+                    <linearGradient id="colorDeaths" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="var(--color-val-red)" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="var(--color-val-red)" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+                  <XAxis dataKey="matchNum" stroke="var(--color-site-muted)" fontSize={12} tickLine={false} axisLine={false} />
+                  <YAxis stroke="var(--color-site-muted)" fontSize={12} tickLine={false} axisLine={false} />
+                  <RechartsTooltip content={<CustomTooltip />} />
+                  <Area type="monotone" dataKey="kills" stroke="var(--color-esport-teal)" strokeWidth={3} fillOpacity={1} fill="url(#colorKills)" activeDot={{ r: 6, fill: "var(--color-esport-teal)", stroke: "#fff", strokeWidth: 2 }} />
+                  <Area type="monotone" dataKey="deaths" stroke="var(--color-val-red)" strokeWidth={3} fillOpacity={1} fill="url(#colorDeaths)" activeDot={{ r: 6, fill: "var(--color-val-red)", stroke: "#fff", strokeWidth: 2 }} />
+                </AreaChart>
+              </ResponsiveContainer>
             </div>
           </div>
         </div>

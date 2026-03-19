@@ -83,11 +83,11 @@ function buildDemoResponse(name: string, tag: string): PlayerStatsResult {
         { name: "Fade",  games: 21, wins: 11, kd: 1.09, img: "https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayiconsmall.png" },
       ],
       recentMatches: [
-        { id: "1", map: "Ascent",  mode: "Competitive", won: true,  kills: 24, deaths: 15, assists: 4, agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: 18, rounWins: 13, roundTotal: 23 },
-        { id: "2", map: "Breeze",  mode: "Competitive", won: false, kills: 14, deaths: 18, assists: 3, agent: "Clove", agentImg: "https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayiconsmall.png", mmrChange: -12, rounWins: 9, roundTotal: 22 },
-        { id: "3", map: "Sunset",  mode: "Competitive", won: true,  kills: 31, deaths: 19, assists: 7, agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: 22, rounWins: 13, roundTotal: 24 },
-        { id: "4", map: "Abyss",   mode: "Competitive", won: true,  kills: 19, deaths: 14, assists: 5, agent: "Fade",  agentImg: "https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayiconsmall.png", mmrChange: 15, rounWins: 13, roundTotal: 22 },
-        { id: "5", map: "Icebox",  mode: "Competitive", won: false, kills: 12, deaths: 16, assists: 2, agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: -10, rounWins: 8, roundTotal: 21 },
+        { id: "1", map: "Ascent",  mode: "Competitive", won: true,  kills: 24, deaths: 15, assists: 4, score: 7500, headshots: 12, agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: 18, rounWins: 13, roundTotal: 23 },
+        { id: "2", map: "Breeze",  mode: "Competitive", won: false, kills: 14, deaths: 18, assists: 3, score: 4300, headshots: 6,  agent: "Clove", agentImg: "https://media.valorant-api.com/agents/1dbf2edd-4729-0984-3115-daa5eed44993/displayiconsmall.png", mmrChange: -12, rounWins: 9, roundTotal: 22 },
+        { id: "3", map: "Sunset",  mode: "Competitive", won: true,  kills: 31, deaths: 19, assists: 7, score: 9200, headshots: 18, agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: 22, rounWins: 13, roundTotal: 24 },
+        { id: "4", map: "Abyss",   mode: "Competitive", won: true,  kills: 19, deaths: 14, assists: 5, score: 5600, headshots: 11, agent: "Fade",  agentImg: "https://media.valorant-api.com/agents/dade69b4-4f5a-8528-247b-219e5a1facd6/displayiconsmall.png", mmrChange: 15, rounWins: 13, roundTotal: 22 },
+        { id: "5", map: "Icebox",  mode: "Competitive", won: false, kills: 12, deaths: 16, assists: 2, score: 3800, headshots: 4,  agent: "Jett",  agentImg: "https://media.valorant-api.com/agents/add6443a-41bd-e414-f6ad-e58d267f4e95/displayiconsmall.png", mmrChange: -10, rounWins: 8, roundTotal: 21 },
       ],
     },
   };
@@ -186,7 +186,7 @@ export async function GET(req: Request) {
           kd:    d.deaths ? Math.round((d.kills / d.deaths) * 100) / 100 : d.kills,
           img:   d.img,
         })),
-      recentMatches: playerMatches.slice(0, 5).map(({ match, player, won }) => ({
+      recentMatches: playerMatches.slice(0, 15).map(({ match, player, won }) => ({
         id:         match.metadata?.matchid ?? "",
         map:        match.metadata?.map     ?? "Unknown",
         mode:       match.metadata?.mode    ?? "Competitive",
@@ -194,6 +194,8 @@ export async function GET(req: Request) {
         kills:      player!.stats.kills,
         deaths:     player!.stats.deaths,
         assists:    player!.stats.assists,
+        score:      player!.stats.score,
+        headshots:  player!.stats.shots?.head ?? 0,
         agent:      player!.character,
         agentImg:   player!.assets?.agent?.small ?? "",
         mmrChange:  0,

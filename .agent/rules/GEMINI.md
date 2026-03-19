@@ -12,6 +12,8 @@ trigger: always_on
 
 > **MANDATORY:** You MUST read the appropriate agent file and its skills BEFORE performing any implementation. This is the highest priority rule.
 
+**ALWAYS UPDATE project-board PAGE WHEN FINISHED A PHASE**
+
 ### 1. Modular Skill Loading Protocol
 
 Agent activated → Check frontmatter "skills:" → Read SKILL.md (INDEX) → Read specific sections.

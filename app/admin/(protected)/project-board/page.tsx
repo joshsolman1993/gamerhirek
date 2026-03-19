@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { CheckCircle2, Circle, Clock, Rocket, Bug, Server, ShieldCheck, Flag } from "lucide-react";
+import { CheckCircle2, Circle, Clock, Rocket, Server, ShieldCheck, Flag } from "lucide-react";
 
 type Milestone = {
   title: string;

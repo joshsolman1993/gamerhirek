@@ -26,7 +26,7 @@ export async function POST(req: Request) {
     // pl. resend.emails.send({ from: "hello@gamerhirek.hu", to: body.email, ... })
 
     return NextResponse.json({ success: true, message: "Sikeres feliratkozás!" });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { success: false, error: "Hiba történt a feliratkozás során." },
       { status: 400 }
