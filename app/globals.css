@@ -156,8 +156,8 @@ a {
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
+    animation-duration: 0s !important;
+    transition-duration: 0s !important;
   }
 }
 
@@ -165,6 +165,7 @@ a {
 .prose-game {
   color: var(--color-site-white);
   line-height: 1.7;
+  max-width: 65ch;
 }
 
 .prose-game h1,
@@ -290,14 +291,14 @@ a {
   background: transparent;
   color: var(--color-site-muted);
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 0.6rem 1rem;
   border: 1px solid var(--color-site-border);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .admin-btn-secondary:hover {
@@ -309,14 +310,14 @@ a {
   background: transparent;
   color: var(--color-val-red);
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.875rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   padding: 0.6rem 1rem;
   border: 1px solid var(--color-val-red);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .admin-btn-danger:hover {

@@ -64,7 +64,7 @@ export default async function ProfilPage() {
                 Staff
               </span>
             )}
-            <form action={userLogoutAction}>
+            <form action={userLogoutAction} aria-label="Kijelentkezés">
               <button 
                 type="submit" 
                 style={{ 

@@ -91,7 +91,7 @@ export default async function AdminLayout({
 
         {/* Sign out */}
         <div style={{ padding: "1.25rem 1.5rem", borderTop: "1px solid var(--color-site-border)" }}>
-          <form action={logoutAction}>
+          <form action={logoutAction} aria-label="Kijelentkezés">
             <button
               type="submit"
               className="admin-btn-secondary"
