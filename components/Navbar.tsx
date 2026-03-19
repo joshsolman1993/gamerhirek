@@ -50,6 +50,8 @@ export function Navbar() {
             { href: "/kategoria/hirek", label: "Hírek" },
             { href: "/patch-notes", label: "Patch Notes" },
             { href: "/kategoria/tippek-utmutatek", label: "Tipp & Útmutató" },
+            { href: "/tier-list", label: "📊 Tier List" },
+            { href: "/terkep-guides", label: "🗺️ Térképek", highlight: true },
             { href: "/napirend", label: "🗓️ Napirend", highlight: true },
             { href: "/pro-scene", label: "🏆 Pro Scene", highlight: true },
             { href: "/stats", label: "📊 Stats", highlight: true },
