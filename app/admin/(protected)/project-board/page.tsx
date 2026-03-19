@@ -45,11 +45,13 @@ const phases: { phase: string; title: string; color: string; milestones: Milesto
   },
   {
     phase: "Fázis 4",
-    title: "Jövőbeli Fejlesztések",
-    color: "var(--color-site-muted)",
+    title: "Közösségi Bővítés",
+    color: "var(--color-esport-teal)",
     milestones: [
-      { title: "Komment Szekció Validálás", description: "Valós idejű Prisma mentés a hozzászólásoknál és webhook Discordra.", status: "planned", icon: <Clock size={18} /> },
-      { title: "Match History Vizualizáció", description: "A statisztika aloldal grafikonos bővítése Recharts-al.", status: "planned", icon: <Bug size={18} /> },
+      { title: "Match History Vizualizáció", description: "A statisztika aloldal grafikonos bővítése interaktív Recharts diagramokkal.", status: "done", icon: <Server size={18} /> },
+      { title: "Esports Fantasy Pick'em", description: "VCT meccs jóslatok, felhasználói XP gyűjtéssel és gamification integrációval.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Keresek Csapatot (LFG)", description: "Valós idejű Valorant csapattárs-kereső fórum optimista UI-jal.", status: "done", icon: <Rocket size={18} /> },
+      { title: "Discord Webhook", description: "Automatikus formázott üzenetküldés a Discord közösségi szerveren cikkpublikáláskor.", status: "done", icon: <ShieldCheck size={18} /> },
     ]
   }
 ];
