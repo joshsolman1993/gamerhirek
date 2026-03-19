@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { getSession } from "@/lib/auth";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await getSession();
+
   return (
     <header style={{
       position: "sticky",
@@ -43,8 +46,8 @@ export function Navbar() {
           </div>
         </Link>
 
-        {/* Nav links */}
-        <div className="nav-links" style={{ display: "flex", alignItems: "center", gap: "0.25rem", flex: 1 }}>
+        {/* Categories / Navigation */}
+        <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, overflowX: "auto", paddingRight: "1rem" }} className="hide-scroll">
           {[
             { href: "/kategoria/esport", label: "Esport" },
             { href: "/kategoria/hirek", label: "Hírek" },
@@ -80,23 +83,65 @@ export function Navbar() {
         {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>
           <SearchOverlay />
-          <Link
-            href="/admin"
-            className="nav-link"
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "0.75rem",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              color: "var(--color-val-red)",
-              border: "1px solid var(--color-val-red)",
-              padding: "0.375rem 0.875rem",
-              transition: "all 0.2s ease",
-            }}
-          >
-            Admin
-          </Link>
+          {session ? (
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              {session.role === "ADMIN" && (
+                 <Link
+                  href="/admin"
+                  className="nav-link"
+                  title="Admin Felület"
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.75rem",
+                    letterSpacing: "0.1em",
+                    textTransform: "uppercase",
+                    color: "var(--color-site-muted)",
+                    padding: "0.375rem 0.5rem",
+                  }}
+                 >
+                   Admin
+                 </Link>
+              )}
+              <Link
+                href="/profil"
+                className="nav-link"
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontWeight: 700,
+                  fontSize: "0.75rem",
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "var(--color-site-bg)",
+                  background: "var(--color-esport-teal)",
+                  border: "1px solid var(--color-esport-teal)",
+                  padding: "0.375rem 0.875rem",
+                  transition: "all 0.2s ease",
+                  borderRadius: "4px"
+                }}
+              >
+                {session.name.split(" ")[0]}
+              </Link>
+            </div>
+          ) : (
+            <Link
+              href="/login"
+              className="nav-link"
+              style={{
+                fontFamily: "var(--font-display)",
+                fontWeight: 700,
+                fontSize: "0.75rem",
+                letterSpacing: "0.1em",
+                textTransform: "uppercase",
+                color: "var(--color-val-red)",
+                border: "1px solid var(--color-val-red)",
+                padding: "0.375rem 0.875rem",
+                transition: "all 0.2s ease",
+              }}
+            >
+              Belépés
+            </Link>
+          )}
         </div>
       </nav>
     </header>

@@ -3,7 +3,8 @@ import { db } from "@/lib/db";
 import { calculateLevel } from "@/lib/xp";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Trophy, Star, Shield, Activity, Calendar } from "lucide-react";
+import { Trophy, Star, Shield, Activity, Calendar, LogOut } from "lucide-react";
+import { userLogoutAction } from "@/actions/user-auth";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -63,6 +64,29 @@ export default async function ProfilPage() {
                 Staff
               </span>
             )}
+            <form action={userLogoutAction}>
+              <button 
+                type="submit" 
+                style={{ 
+                  background: "transparent", 
+                  border: "1px solid var(--color-site-border)", 
+                  color: "var(--color-site-muted)", 
+                  padding: "0.5rem", 
+                  borderRadius: "4px", 
+                  cursor: "pointer", 
+                  display: "flex", 
+                  alignItems: "center", 
+                  gap: "0.5rem",
+                  fontFamily: "var(--font-display)",
+                  fontSize: "0.75rem",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                transition: "all 0.2s ease"
+              }}
+            >
+              <LogOut size={14} /> Kilépés
+            </button>
+            </form>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", color: "var(--color-site-muted)", fontSize: "0.875rem" }}>
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}><Calendar size={16} /> Regisztrált: {new Date(user.createdAt).toLocaleDateString("hu-HU")}</span>
