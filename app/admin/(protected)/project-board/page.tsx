@@ -54,6 +54,37 @@ const phases: { phase: string; title: string; color: string; milestones: Milesto
       { title: "Discord Webhook", description: "Automatikus formázott üzenetküldés a Discord közösségi szerveren cikkpublikáláskor.", status: "done", icon: <ShieldCheck size={18} /> },
       { title: "UX & SEO Audit", description: "A rendszer teljes körű felülvizsgálata, frontend teljesítmény optimalizálása és keresőoptimalizálás Meta címkékkel.", status: "done", icon: <CheckCircle2 size={18} /> },
     ]
+  },
+  {
+    phase: "Fázis 5",
+    title: "Gamification & Interakciók",
+    color: "var(--color-esport-teal)",
+    milestones: [
+      { title: "Napi Kvíz (Trivia)", description: "Napi kvíz rendszer adatbázis és UI logikával, válaszotok ellenőrzésével és XP jutalmazással.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Automatizált Jelvények", description: "Server action logika a felhasználói mérföldkövek és Badge-ek kiosztására dinamikusan.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Kiterjesztett Profil", description: "Részletes profil statisztikákkal (kommentek, kvízek, jóslatok összesítése).", status: "done", icon: <CheckCircle2 size={18} /> },
+    ]
+  },
+  {
+    phase: "Fázis 6",
+    title: "Animációk & Globális UI",
+    color: "var(--color-val-red)",
+    milestones: [
+      { title: "Értesítés Rendszer (Bell)", description: "Valós idejű dropdown SWR-el pollingolva jelezve az új kitűzőket.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Hírek Ticker UI", description: "CSS végtelenül pörgő szalag a legfrissebb befejezett e-sport meccseredményekkel.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Particles Background", description: "HTML5 Canvas generált interaktív részecske háló a hősnél.", status: "done", icon: <CheckCircle2 size={18} /> },
+    ]
+  },
+  {
+    phase: "Fázis 7",
+    title: "Admin Dashboard CRUD",
+    color: "var(--color-patch-gold)",
+    milestones: [
+      { title: "Haladó Rekord Analitika", description: "Recharts vonal- és oszlopdiagramok aggregálva a heti regisztrációkkal és kategóriákkal.", status: "done", icon: <Rocket size={18} /> },
+      { title: "Felhasználó Moderáció", description: "Regisztráltak CMS listázása interaktív XP módosító inputokkal és kitiltás (Ban) kapcsolóval.", status: "done", icon: <ShieldCheck size={18} /> },
+      { title: "Interaktív Tartalom CMS", description: "Dinamikus JSON tree építő Kvíz-kérdés felülethez és Pick'em meccs lezáró form.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Metaadat Kezelő", description: "Kategóriák vizuális színkódokkal ellátott interaktív táblája, beépített slug-generátorral.", status: "done", icon: <Server size={18} /> },
+    ]
   }
 ];
 
