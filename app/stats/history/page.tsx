@@ -53,6 +53,8 @@ function MatchHistoryForm() {
 
       // Process matches to find the specific player's stats
       const processedMatches = data.data.map((match: any, index: number) => {
+        if (!match.players || !match.players.all_players) return null;
+
         const targetPlayer = match.players.all_players.find(
           (p: any) => p.name.toLowerCase() === playerName.toLowerCase() && p.tag.toLowerCase() === playerTag.toLowerCase()
         );
@@ -60,19 +62,19 @@ function MatchHistoryForm() {
         if (!targetPlayer) return null;
 
         return {
-          id: match.metadata.matchid,
-          map: match.metadata.map,
-          agent: targetPlayer.character,
-          agentIcon: targetPlayer.assets.agent.small,
-          kills: targetPlayer.stats.kills,
-          deaths: targetPlayer.stats.deaths,
-          assists: targetPlayer.stats.assists,
-          score: targetPlayer.stats.score,
-          headshots: targetPlayer.stats.headshots,
-          kda: ((targetPlayer.stats.kills + targetPlayer.stats.assists) / Math.max(1, targetPlayer.stats.deaths)).toFixed(2),
+          id: match.metadata?.matchid || index.toString(),
+          map: match.metadata?.map || "Unknown",
+          agent: targetPlayer.character || "Unknown",
+          agentIcon: targetPlayer.assets?.agent?.small || "",
+          kills: targetPlayer.stats?.kills || 0,
+          deaths: targetPlayer.stats?.deaths || 0,
+          assists: targetPlayer.stats?.assists || 0,
+          score: targetPlayer.stats?.score || 0,
+          headshots: targetPlayer.stats?.headshots || 0,
+          kda: (((targetPlayer.stats?.kills || 0) + (targetPlayer.stats?.assists || 0)) / Math.max(1, (targetPlayer.stats?.deaths || 1))).toFixed(2),
           matchNum: `M${data.data.length - index}`,
-          team: targetPlayer.team,
-          won: match.teams[targetPlayer.team.toLowerCase()]?.has_won
+          team: targetPlayer.team || "None",
+          won: match.teams && targetPlayer.team ? match.teams[targetPlayer.team.toLowerCase()]?.has_won : false
         };
       }).filter(Boolean).reverse(); // Reverse to get chronological order for charts
 
