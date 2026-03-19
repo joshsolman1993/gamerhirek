@@ -1,0 +1,36 @@
+# GamerHírek
+
+> Next.js 15 (App Router) alapú, gamifikált e-sport és hírportál webalkalmazás, beépített közösségi funkciókkal és komplex adminisztrációs panellel.
+
+## ⚙️ Tech Stack & Architecture
+- **Framework:** Next.js 15.2+ (React 19, Server Components, Server Actions)
+- **Styling:** Tailwind CSS v4, Lucide React (ikonok), Recharts (diagramok)
+- **Database / ORM:** PostgreSQL, Prisma ORM (v6.5)
+- **Auth:** Egyedi JWT/Session-alapú hitelesítés (bcryptjs, jose)
+- **UI & Markdown:** @uiw/react-md-editor, Drag & Drop (@dnd-kit)
+
+## 📁 Core Files & Directory Structure
+- `app/`: Fő Next.js App Router könyvtár. A mappaszerkezet határozza meg a route-okat.
+  - `app/(auth)/`: Bejelentkezés, regisztráció (Login, Register).
+  - `app/admin/`: Privát adminisztrációs felület (CMS, cikkek, kvízek, pick'em, statisztikák).
+  - `app/hirek/`, `app/kategoria/`: Dinamikus cikkolvasók és kategória listázók.
+  - `app/pro-scene/`: E-sport menetrendek és eredmények.
+  - `app/trivia/`: Gamifikált, napi interaktív kvíz.
+  - `app/profil/`: Felhasználói profil (XP, szint, értesítések).
+  - `app/lfg/`, `app/chat/`: Közösségi "Looking for Group" felület és Globális chat.
+  - `app/api/`: Opcionális külső vagy belső API végpontok (a legtöbb logika Server Actions-ben van).
+- `components/`: Újrahasználható React komponensek (UI, cikk kártyák, navigáció).
+- `actions/`: Next.js Server Actions a tiszta backend-frontend kommunikációhoz (CRUD műveletek RPC szerűen).
+- `lib/`: Segédfüggvények, session kezelés (`auth.ts`, `session.ts`), adatbázis kliens (`db.ts`, `prisma.ts`).
+- `prisma/schema.prisma`: Az adatbázis sémát (modellek) tartalmazza.
+
+## 🧠 Key Concepts & Domain Model
+- **Gamifikáció (XP & Szintlépés):** A felhasználók interakciókért (komment, kvíz, cikk olvasás) XP-t (`xp`, `level`) és eredményeket (`Achievement`) kapnak, mely növeli a vizuális elköteleződést (Level calculation). 
+- **Roles & Permissions:** Kétfajta szerepkör van jelen az adatbázisban és a middleware-ben: `USER` és `ADMIN` (bár a sémában default `EDITOR` is van). A middleware védi az `/admin` végpontokat az illetéktelenektől.
+- **Tartalomkezelő Rendszer (CMS):** Teljes körű cikkírás (Markdown), publikálás, Markdown parserek, Címkézés (`Tag`), és kategóriák (`Category`) létrehozása, ami dinamikusan renderelődik.
+- **Közösség (Community):** Hozzászólások cikkekhez (`Comment`), Globális Chatroom (`GlobalChat`), pollok és játéktárs kereső algoritmus állomás (`LFGPost`).
+- **Napi Aktivitások:** Kvízekkel (`Quiz`, `QuizAttempt`) és Tippmix-szerű sportversenyekkel (`Match`, `Prediction`) növeli a DAU-t (Daily Active Users).
+- **Értesítések:** Az adatbázis szintjén tárolt (`Notification`) elemek jelzik a felhasználóknak a megszerzett XP-t és eseményeket.
+
+## 🎯 Current Context & Goals (Phase 7)
+Jelenleg a projekt a **7. Fázisnál** tart, ami az Adminisztrációs Panel kiegészítéséről (`PLAN-phase-7-admin-panel.md`), moderációról (spam törlés, user ban), adatvizualizációról (Recharts) és a dinamikus Poll/Quiz/Pick'em adminisztrációjáról szól.

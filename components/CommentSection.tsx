@@ -2,12 +2,20 @@
 
 import { useState, useTransition, useRef } from "react";
 import { addComment } from "@/actions/community";
+import { toggleCommentUpvote } from "@/actions/social";
+import { ThumbsUp } from "lucide-react";
+import Link from "next/link";
+import Image from "next/image";
 
 interface Comment {
   id: string;
   authorName: string;
   content: string;
   createdAt: Date;
+  userId?: string | null;
+  userAvatar?: string | null;
+  upvotesC?: number;
+  isUpvoted?: boolean;
 }
 
 interface CommentSectionProps {
@@ -52,6 +60,8 @@ export function CommentSection({ articleId, initialComments }: CommentSectionPro
           authorName,
           content,
           createdAt: new Date(),
+          upvotesC: 0,
+          isUpvoted: false
         },
         ...prev,
       ]);
@@ -195,26 +205,72 @@ export function CommentSection({ articleId, initialComments }: CommentSectionPro
             >
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.625rem" }}>
                 <div style={{ display: "flex", alignItems: "center", gap: "0.625rem" }}>
-                  <div style={{
-                    width: "32px", height: "32px",
-                    background: "var(--color-val-red)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.875rem",
-                    color: "white", flexShrink: 0,
-                  }}>
-                    {comment.authorName.charAt(0).toUpperCase()}
-                  </div>
-                  <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9375rem" }}>
-                    {comment.authorName}
-                  </span>
+                  {comment.userId ? (
+                    <Link href={`/profil/${comment.userId}`} style={{ display: "flex", alignItems: "center", gap: "0.625rem", textDecoration: "none" }}>
+                      <div style={{
+                        width: "32px", height: "32px", borderRadius: "50%", overflow: "hidden",
+                        background: "var(--color-site-border)", flexShrink: 0,
+                      }}>
+                        {comment.userAvatar ? (
+                           <Image src={comment.userAvatar} alt={comment.authorName} width={32} height={32} style={{ objectFit: "cover" }} />
+                        ) : (
+                          <div style={{ width: "100%", height: "100%", background: "var(--color-val-red)", display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.875rem" }}>
+                            {comment.authorName.charAt(0).toUpperCase()}
+                          </div>
+                        )}
+                      </div>
+                      <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9375rem", color: "var(--color-site-white)" }}>
+                        {comment.authorName}
+                      </span>
+                    </Link>
+                  ) : (
+                    <>
+                      <div style={{
+                        width: "32px", height: "32px", borderRadius: "50%", overflow: "hidden",
+                        background: "var(--color-val-red)",
+                        display: "flex", alignItems: "center", justifyContent: "center",
+                        fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.875rem",
+                        color: "white", flexShrink: 0,
+                      }}>
+                        {comment.authorName.charAt(0).toUpperCase()}
+                      </div>
+                      <span style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "0.9375rem", color: "var(--color-site-white)" }}>
+                        {comment.authorName}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <span style={{ fontSize: "0.75rem", color: "var(--color-site-muted)" }}>
                   {timeAgo(comment.createdAt)}
                 </span>
               </div>
-              <p style={{ color: "rgba(236,232,225,0.85)", lineHeight: 1.6, margin: 0, fontSize: "0.9375rem" }}>
+              <p style={{ color: "rgba(236,232,225,0.85)", lineHeight: 1.6, margin: 0, fontSize: "0.9375rem", marginBottom: "1rem" }}>
                 {comment.content}
               </p>
+              
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <button
+                  onClick={async () => {
+                    await toggleCommentUpvote(comment.id);
+                  }}
+                  style={{
+                    background: "transparent",
+                    border: "none",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                    cursor: "pointer",
+                    color: comment.isUpvoted ? "var(--color-esport-teal)" : "var(--color-site-muted)",
+                    fontFamily: "var(--font-display)",
+                    fontWeight: 700,
+                    fontSize: "0.875rem",
+                    transition: "color 0.2s ease"
+                  }}
+                >
+                  <ThumbsUp size={16} fill={comment.isUpvoted ? "currentColor" : "none"} />
+                  {comment.upvotesC || 0} Kudos
+                </button>
+              </div>
             </div>
           ))}
         </div>

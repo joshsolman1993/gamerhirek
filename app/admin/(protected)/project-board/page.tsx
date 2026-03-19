@@ -85,6 +85,18 @@ const phases: { phase: string; title: string; color: string; milestones: Milesto
       { title: "Interaktív Tartalom CMS", description: "Dinamikus JSON tree építő Kvíz-kérdés felülethez és Pick'em meccs lezáró form.", status: "done", icon: <CheckCircle2 size={18} /> },
       { title: "Metaadat Kezelő", description: "Kategóriák vizuális színkódokkal ellátott interaktív táblája, beépített slug-generátorral.", status: "done", icon: <Server size={18} /> },
     ]
+  },
+  {
+    phase: "Fázis 8",
+    title: "Kiterjesztett Közösségi Funkciók",
+    color: "var(--color-esport-teal)",
+    milestones: [
+      { title: "Közvetlen Üzenetek (DM)", description: "1:1 privát beszélgetések a platform felhasználói között olvasottsági állapottal.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Profil & Követés", description: "Nyilvános adatlapok statisztikákkal és felhasználók közötti follow kapcsolati hálóval.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Közösségek / Klánok", description: "Egyedi klán logók, leírások, taglisták és belső fal üzenetek küldéséhez.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Játékos Ajánló Hub", description: "Aktivitás alapon ajánlott új barátok és követett felhasználók aggregált hírfolyama.", status: "done", icon: <CheckCircle2 size={18} /> },
+      { title: "Kudos / Upvote", description: "Egy kattintásos hozzászólás értékelő rendszer beépített RP gamifikációval.", status: "done", icon: <Rocket size={18} /> },
+    ]
   }
 ];
 

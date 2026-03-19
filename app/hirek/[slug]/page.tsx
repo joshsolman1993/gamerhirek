@@ -7,6 +7,7 @@ import { ArticleCard } from "@/components/ArticleCard";
 import { CommentSection } from "@/components/CommentSection";
 import { NewsletterForm } from "@/components/NewsletterForm";
 import { db } from "@/lib/db";
+import { getSession } from "@/lib/auth";
 import type { Metadata } from "next";
 
 interface ArticlePageProps {
@@ -35,11 +36,33 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
   if (!article) notFound();
 
-  const comments = await db.comment.findMany({
+  const session = await getSession();
+
+  const commentsData = await db.comment.findMany({
     where: { articleId: article.id, approved: true },
     orderBy: { createdAt: "desc" },
-    select: { id: true, authorName: true, content: true, createdAt: true },
+    select: { 
+      id: true, 
+      authorName: true, 
+      content: true, 
+      createdAt: true, 
+      userId: true,
+      user: { select: { avatarUrl: true } },
+      _count: { select: { upvotes: true } },
+      upvotes: session?.id ? { where: { userId: session.id } } : false,
+    },
   });
+
+  const comments = commentsData.map(c => ({
+    id: c.id,
+    authorName: c.authorName,
+    content: c.content,
+    createdAt: c.createdAt,
+    userId: c.userId,
+    userAvatar: c.user?.avatarUrl,
+    upvotesC: c._count.upvotes,
+    isUpvoted: c.upvotes && c.upvotes.length > 0
+  }));
 
 
   const relatedArticles = related
