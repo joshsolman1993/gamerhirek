@@ -59,6 +59,7 @@ export async function Navbar() {
             { href: "/pro-scene", label: "🏆 Pro Scene", highlight: true },
             { href: "/pro-scene/pickem", label: "🔮 Pick'em", highlight: true },
             { href: "/lfg", label: "💬 LFG", highlight: true },
+            { href: "/chat", label: "🍻 Kocsma", highlight: true },
             { href: "/stats", label: "📊 Stats", highlight: true },
           ].map((item) => (
             <Link

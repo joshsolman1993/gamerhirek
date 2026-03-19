@@ -22,6 +22,7 @@ model User {
   achievements UserAchievement[]
   predictions  Prediction[]
   lfgPosts     LFGPost[]
+  globalChats  GlobalChat[]
 }
 
 model Achievement {
@@ -159,6 +160,16 @@ model LFGPost {
   roles     String   @default("Any")
   server    String   @default("Frankfurt")
   mic       Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model GlobalChat {
+  id        String   @id @default(cuid())
+  userId    String
+  content   String
+  isSpecial Boolean  @default(false)
   createdAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
