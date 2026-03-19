@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { checkAndAwardAchievements } from "./achievements";
 
 export async function getActiveQuiz() {
   const quiz = await db.quiz.findFirst({
@@ -91,6 +92,8 @@ export async function submitQuizAttempt(quizId: string, userAnswers: Record<stri
         });
       }
     });
+
+    await checkAndAwardAchievements(session.id); // Gamification Badge check
 
     revalidatePath("/trivia");
     revalidatePath("/profil");

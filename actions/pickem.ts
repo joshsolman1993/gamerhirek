@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { checkAndAwardAchievements } from "./achievements";
 
 export async function submitPredictionAction(matchId: string, predictedWinner: string) {
   try {
@@ -49,6 +50,8 @@ export async function submitPredictionAction(matchId: string, predictedWinner: s
         }
       });
     }
+
+    await checkAndAwardAchievements(session.id); // Gamification Badge check
 
     revalidatePath("/pro-scene/pickem");
     return { success: true };

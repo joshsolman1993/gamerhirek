@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { checkAndAwardAchievements } from "./achievements";
 
 export async function getChatMessages(limit = 50) {
   try {
@@ -47,6 +48,8 @@ export async function sendChatMessage(content: string) {
         isSpecial,
       },
     });
+
+    await checkAndAwardAchievements(session.id); // Gamification Badge check
 
     revalidatePath("/chat");
     return { success: true, message: msg };
