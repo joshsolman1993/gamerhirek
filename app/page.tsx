@@ -3,6 +3,7 @@ import Link from "next/link";
 import { getFeaturedArticle, getArticles, getCategories } from "@/lib/dal";
 import { ArticleCard } from "@/components/ArticleCard";
 import { DailyPoll } from "@/components/DailyPoll";
+import { ParticlesBackground } from "@/components/ParticlesBackground";
 import { db } from "@/lib/db";
 import { formatRelativeDate } from "@/lib/utils";
 import type { Metadata } from "next";
@@ -36,7 +37,8 @@ export default async function HomePage() {
   const latestArticles = articles.filter((a) => !a.featured).slice(0, 5);
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
+      <ParticlesBackground />
       {/* ─── HERO: Diagonal Cut Featured Article ─── */}
       {featured && (
         <section

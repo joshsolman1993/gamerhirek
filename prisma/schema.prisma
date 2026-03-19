@@ -24,6 +24,8 @@ model User {
   lfgPosts     LFGPost[]
   globalChats  GlobalChat[]
   quizAttempts QuizAttempt[]
+  notifications Notification[]
+  comments      Comment[]
 }
 
 model Achievement {
@@ -107,6 +109,9 @@ model Comment {
   article     Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
   createdAt   DateTime @default(now())
   approved    Boolean  @default(true)
+  
+  userId      String?
+  user        User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Poll {
@@ -219,4 +224,16 @@ model QuizAttempt {
   quiz   Quiz @relation(fields: [quizId], references: [id], onDelete: Cascade)
 
   @@unique([userId, quizId]) // Prevent taking the same quiz multiple times
+}
+
+// Phase 6: Notifications
+model Notification {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String
+  isRead    Boolean  @default(false)
+  link      String?  // Optional jump link
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

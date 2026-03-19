@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SearchOverlay } from "@/components/SearchOverlay";
+import { NotificationBell } from "@/components/NotificationBell";
 import { getSession } from "@/lib/auth";
 
 export async function Navbar() {
@@ -89,6 +90,7 @@ export async function Navbar() {
           <SearchOverlay />
           {session ? (
             <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+              <NotificationBell />
               {session.role === "ADMIN" && (
                  <Link
                   href="/admin"

@@ -69,28 +69,28 @@ export async function checkAndAwardAchievements(userId: string) {
 
     // Evaluate FIRST_PREDICTION
     if (!currentBadges.includes("badge_first_prediction") && user.predictions.length >= 1) {
-      await awardBadge(user.id, "badge_first_prediction");
+      await awardBadge(user.id, "badge_first_prediction", "Fogadások Kezdete");
       newlyAwarded++;
       earnedXp += BADGES.find((b) => b.id === "badge_first_prediction")!.xpReward;
     }
 
     // Evaluate LEVEL_10
     if (!currentBadges.includes("badge_level_10") && user.level >= 10) {
-      await awardBadge(user.id, "badge_level_10");
+      await awardBadge(user.id, "badge_level_10", "Tapasztalt Ügynök");
       newlyAwarded++;
       earnedXp += BADGES.find((b) => b.id === "badge_level_10")!.xpReward;
     }
 
     // Evaluate QUIZ_MASTER
     if (!currentListHas(currentBadges, "badge_quiz_master") && user.quizAttempts.length >= 5) {
-      await awardBadge(user.id, "badge_quiz_master");
+      await awardBadge(user.id, "badge_quiz_master", "Kvíz Mester");
       newlyAwarded++;
       earnedXp += BADGES.find((b) => b.id === "badge_quiz_master")!.xpReward;
     }
 
     // Evaluate SOCIAL_BUTTERFLY
     if (!currentListHas(currentBadges, "badge_social_butterfly") && user.globalChats.length >= 10) {
-      await awardBadge(user.id, "badge_social_butterfly");
+      await awardBadge(user.id, "badge_social_butterfly", "Kocsma Töltelék");
       newlyAwarded++;
       earnedXp += BADGES.find((b) => b.id === "badge_social_butterfly")!.xpReward;
     }
@@ -111,15 +111,20 @@ export async function checkAndAwardAchievements(userId: string) {
   }
 }
 
+import { createNotification } from "./notifications";
+
 function currentListHas(list: string[], badgeId: string) {
   return list.includes(badgeId);
 }
 
-async function awardBadge(userId: string, achievementId: string) {
+async function awardBadge(userId: string, achievementId: string, badgeName: string) {
   await db.userAchievement.create({
     data: {
       userId,
       achievementId,
     },
   });
+
+  // Notify the user about their achievement
+  await createNotification(userId, `🏆 Új kitűzőt szereztél: ${badgeName}!`, "/profil");
 }

@@ -3,6 +3,8 @@
 import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import { getSession } from "@/lib/auth";
+import { checkAndAwardAchievements } from "./achievements";
 
 const CommentSchema = z.object({
   content: z.string().min(3, "Legalább 3 karakter szükséges").max(1000, "Maximum 1000 karakter"),
@@ -27,14 +29,21 @@ export async function addComment(formData: FormData) {
     return { error: parsed.error.errors[0].message };
   }
 
+  const session = await getSession();
+
   await db.comment.create({
     data: {
       content: parsed.data.content,
-      authorName: parsed.data.authorName,
-      authorEmail: parsed.data.authorEmail || null,
+      authorName: session ? session.name : parsed.data.authorName,
+      authorEmail: session ? session.email : (parsed.data.authorEmail || null),
       articleId: parsed.data.articleId,
+      userId: session?.id || null, // Attach user if possible
     },
   });
+
+  if (session?.id) {
+    await checkAndAwardAchievements(session.id); // Award FIRST_COMMENT equivalent achievements implicitly 
+  }
 
   revalidatePath("/hirek/[slug]", "page");
   return { success: true };
