@@ -61,6 +61,7 @@ export default async function AdminLayout({
         <nav style={{ padding: "0 0.75rem", flex: 1 }}>
           {[
             { href: "/admin", label: "Dashboard", icon: "⬡" },
+            { href: "/admin/project-board", label: "Fejlesztési Terv", icon: "⚑" },
             { href: "/admin/articles", label: "Cikkek", icon: "≡" },
             { href: "/admin/articles/new", label: "Új cikk", icon: "+" },
             { href: "/", label: "← Vissza az oldalra", icon: "" },
