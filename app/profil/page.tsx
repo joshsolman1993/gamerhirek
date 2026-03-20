@@ -3,8 +3,9 @@ import { db } from "@/lib/db";
 import { calculateLevel } from "@/lib/xp";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Trophy, Shield, Activity, Calendar, LogOut } from "lucide-react";
+import { Trophy, Shield, Activity, Calendar, LogOut, Coins } from "lucide-react";
 import { userLogoutAction } from "@/actions/user-auth";
+import { TeamSelector } from "@/components/profile/TeamSelector";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -94,7 +95,15 @@ export default async function ProfilPage() {
             </button>
             </form>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", color: "var(--color-site-muted)", fontSize: "0.875rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", color: "var(--color-site-muted)", fontSize: "0.875rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+            <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "rgba(0, 255, 127, 0.1)", color: "#00FF7F", padding: "0.25rem 0.75rem", borderRadius: "100px", fontWeight: 700 }}>
+              <Coins size={16} /> {user.gamerCoin} GC
+            </span>
+            {user.favoriteTeam && (
+              <span style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "rgba(255, 255, 255, 0.1)", color: "var(--color-site-white)", padding: "0.25rem 0.75rem", borderRadius: "100px", fontWeight: 700 }}>
+                # {user.favoriteTeam} Fan
+              </span>
+            )}
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}><Calendar size={16} /> Regisztrált: {new Date(user.createdAt).toLocaleDateString("hu-HU")}</span>
             <span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}><Activity size={16} /> Publikált cikkek: {user.articles.length}</span>
           </div>
@@ -114,6 +123,8 @@ export default async function ProfilPage() {
           </div>
         </div>
       </header>
+
+      <TeamSelector currentTeam={user.favoriteTeam} changedAt={user.favoriteTeamChangedAt} />
 
       {/* ── ACHIEVEMENTS ── */}
       <section>

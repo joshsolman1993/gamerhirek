@@ -35,6 +35,13 @@ model User {
   guildMemberships GuildMember[]
   upvotes          Upvote[]
   guildChats       GuildChat[]
+  // Phase 10: E-sport and Interactivity
+  gamerCoin             Int @default(0)
+  dailyGCEarned         Int @default(0)
+  lastGCDate            DateTime?
+  favoriteTeam          String? 
+  favoriteTeamChangedAt DateTime?
+  purchases             UserPurchase[]
 }
 
 model Achievement {
@@ -318,4 +325,30 @@ model Upvote {
   comment Comment? @relation(fields: [commentId], references: [id], onDelete: Cascade)
 
   @@unique([userId, commentId])
+}
+
+// Phase 10: E-sport & Interactivity Virtual Economy
+model ShopItem {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Int
+  type        String   @default("EMOJI")
+  imageUrl    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+
+  purchases UserPurchase[]
+}
+
+model UserPurchase {
+  id          String   @id @default(cuid())
+  userId      String
+  shopItemId  String
+  purchasedAt DateTime @default(now())
+
+  user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shopItem ShopItem @relation(fields: [shopItemId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, shopItemId]) // You can buy a specific shop item once (like unlocking an emoji)
 }

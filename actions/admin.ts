@@ -108,6 +108,13 @@ export async function updateMatchResult(matchId: string, winner: string) {
     where: { id: matchId },
     data: { winner, status: "COMPLETED" },
   });
+
+  // E-sport Phase 10: Reward fans of the winning team with extra XP
+  await db.user.updateMany({
+    where: { favoriteTeam: winner },
+    data: { xp: { increment: 100 } }
+  });
+
   revalidatePath("/admin/matches");
   revalidatePath("/pro-scene/pickem");
   return { success: true };

@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { checkAndAwardAchievements } from "./achievements";
+import { earnGamerCoin } from "./economy";
 
 export async function getChatMessages(limit = 50) {
   try {
@@ -50,6 +51,7 @@ export async function sendChatMessage(content: string) {
     });
 
     await checkAndAwardAchievements(session.id); // Gamification Badge check
+    await earnGamerCoin(2); // Earn 2 GamerCoins for chatting
 
     revalidatePath("/chat");
     return { success: true, message: msg };
