@@ -498,6 +498,60 @@ export default async function HomePage() {
           </div>
         </aside>
       </div>
+
+      {/* ─── COMMUNITY CALL TO ACTION ─── */}
+      <section style={{ maxWidth: "1280px", margin: "0 auto 4rem auto", padding: "0 1.5rem" }}>
+        <div style={{
+          background: "linear-gradient(135deg, rgba(15,25,35,0.95) 0%, rgba(20,50,60,0.85) 100%)",
+          border: "1px solid var(--color-esport-teal)",
+          borderRadius: "16px",
+          padding: "3rem 4rem",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          gap: "2rem",
+          position: "relative",
+          overflow: "hidden",
+          flexWrap: "wrap",
+        }}>
+          <div style={{ position: "absolute", top: "-100px", right: "-50px", width: "400px", height: "400px", background: "radial-gradient(circle, var(--color-esport-teal) 0%, transparent 60%)", opacity: 0.15, pointerEvents: "none" }} />
+          
+          <div style={{ maxWidth: "600px", zIndex: 1 }}>
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 900, fontSize: "clamp(2rem, 3vw, 2.5rem)", color: "white", textTransform: "uppercase", margin: "0 0 1rem 0" }}>
+              Lépj be a <span style={{ color: "var(--color-esport-teal)" }}>Közösségbe</span>
+            </h2>
+            <p style={{ color: "rgba(236,232,225,0.8)", fontSize: "1.125rem", lineHeight: 1.6, margin: "0 0 2rem 0" }}>
+              Építsd a saját profilod, kövess be más játékosokat, csatlakozz izgalmas Valorant klánokhoz és találjatok egymásra a direkt chat segítségével! Itt a tiéd a pálya.
+            </p>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem" }}>
+              <Link href="/kozosseg" className="admin-btn-primary" style={{ background: "var(--color-esport-teal)", border: "1px solid var(--color-esport-teal)", color: "var(--color-site-bg)" }}>
+                Közösségi Hub
+              </Link>
+              <Link href="/guilds" className="admin-btn-secondary" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
+                Klánok listája
+              </Link>
+              <Link href="/lfg" className="admin-btn-secondary" style={{ borderColor: "rgba(255,255,255,0.2)" }}>
+                LFG Kereső
+              </Link>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem", zIndex: 1, minWidth: "280px" }}>
+            <div style={{ background: "rgba(15,25,35,0.8)", padding: "1.25rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", gap: "1rem" }}>
+               <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--color-esport-teal)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-site-bg)", fontSize: "1.25rem" }}>👥</div>
+               <div><div style={{ fontWeight: 700, color: "white", fontFamily: "var(--font-display)" }}>Kövess Játékosokat</div><div style={{ fontSize: "0.75rem", color: "var(--color-site-muted)" }}>Értesülj az aktivitásukról</div></div>
+            </div>
+            <div style={{ background: "rgba(15,25,35,0.8)", padding: "1.25rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", gap: "1rem" }}>
+               <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--color-patch-gold)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-site-bg)", fontSize: "1.25rem" }}>🛡️</div>
+               <div><div style={{ fontWeight: 700, color: "white", fontFamily: "var(--font-display)" }}>Csatlakozz Klánhoz</div><div style={{ fontSize: "0.75rem", color: "var(--color-site-muted)" }}>Saját privát fal és leírás</div></div>
+            </div>
+            <div style={{ background: "rgba(15,25,35,0.8)", padding: "1.25rem 1.5rem", borderRadius: "12px", border: "1px solid rgba(255,255,255,0.05)", display: "flex", alignItems: "center", gap: "1rem" }}>
+               <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "var(--color-val-red)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-site-bg)", fontSize: "1.25rem" }}>💬</div>
+               <div><div style={{ fontWeight: 700, color: "white", fontFamily: "var(--font-display)" }}>Direkt Üzenetek</div><div style={{ fontSize: "0.75rem", color: "var(--color-site-muted)" }}>Beszélgessetek 1v1-ben is</div></div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -59,6 +59,8 @@ export async function Navbar() {
             { href: "/napirend", label: "🗓️ Napirend", highlight: true },
             { href: "/pro-scene", label: "🏆 Pro Scene", highlight: true },
             { href: "/pro-scene/pickem", label: "🔮 Pick'em", highlight: true },
+            { href: "/kozosseg", label: "👥 Közösség", highlight: true },
+            { href: "/guilds", label: "🛡️ Klánok", highlight: true },
             { href: "/lfg", label: "💬 LFG", highlight: true },
             { href: "/chat", label: "🍻 Kocsma", highlight: true },
             { href: "/trivia", label: "🧠 Trivia", highlight: true },
