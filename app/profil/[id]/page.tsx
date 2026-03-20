@@ -3,7 +3,7 @@ import { getSession } from "@/lib/auth";
 import { calculateLevel } from "@/lib/xp";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { Trophy, Activity, Calendar, Shield, MessageSquare } from "lucide-react";
+import { Trophy, Activity, Calendar, MessageSquare } from "lucide-react";
 import { FollowButton } from "./FollowButton";
 import Link from "next/link";
 import type { Metadata } from "next";

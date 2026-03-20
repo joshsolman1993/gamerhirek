@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { getCategories } from "@/lib/dal";
 import { updateArticle } from "@/actions/articles";
 import { DeleteArticleButton } from "@/components/DeleteArticleButton";
+import { MarkdownEditor } from "@/components/MarkdownEditor";
 
 interface EditPageProps {
   params: Promise<{ id: string }>;
@@ -153,20 +154,7 @@ export default async function EditArticlePage({ params }: EditPageProps) {
               >
                 Tartalom (Markdown) *
               </label>
-              <textarea
-                id="content"
-                name="content"
-                required
-                rows={20}
-                className="admin-input"
-                defaultValue={article.content}
-                style={{
-                  resize: "vertical",
-                  fontFamily: "monospace",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.6,
-                }}
-              />
+              <MarkdownEditor initialValue={article.content} />
             </div>
           </div>
 

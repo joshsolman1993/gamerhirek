@@ -1,6 +1,7 @@
 import { getCategories } from "@/lib/dal";
 import { createArticle } from "@/actions/articles";
 import Link from "next/link";
+import { MarkdownEditor } from "@/components/MarkdownEditor";
 
 export default async function NewArticlePage() {
   const categories = await getCategories();
@@ -148,23 +149,7 @@ export default async function NewArticlePage() {
               >
                 Tartalom (Markdown) *
               </label>
-              <p style={{ fontSize: "0.75rem", color: "var(--color-site-muted)", marginBottom: "0.75rem" }}>
-                Markdown szintaxis támogatott: # H1, ## H2, **vastag**, - lista, {">"} idézet, stb.
-              </p>
-              <textarea
-                id="content"
-                name="content"
-                required
-                rows={20}
-                className="admin-input"
-                placeholder="# Cikk tartalma&#10;&#10;## Bevezetés&#10;&#10;..."
-                style={{
-                  resize: "vertical",
-                  fontFamily: "monospace",
-                  fontSize: "0.875rem",
-                  lineHeight: 1.6,
-                }}
-              />
+              <MarkdownEditor />
             </div>
           </div>
 

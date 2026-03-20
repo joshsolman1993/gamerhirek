@@ -1,4 +1,7 @@
 import Image from "next/image";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getArticleBySlug, getArticles } from "@/lib/dal";
@@ -68,9 +71,6 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
   const relatedArticles = related
     .filter((a) => a.id !== article.id && a.category.id === article.category.id)
     .slice(0, 3);
-
-  // Render simple markdown-like content
-  const contentLines = article.content.split("\n");
 
   return (
     <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "2rem 1.5rem" }}>
@@ -192,56 +192,33 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
 
           {/* Content — simple markdown-like rendering */}
           <div className="prose-game">
-            {contentLines.map((line, i) => {
-              if (line.startsWith("# "))
-                return (
-                  <h2 key={i} style={{ fontSize: "2rem", marginTop: "2.5rem" }}>
-                    {line.slice(2)}
-                  </h2>
-                );
-              if (line.startsWith("## "))
-                return (
-                  <h2 key={i} style={{ fontSize: "1.5rem", marginTop: "2rem" }}>
-                    {line.slice(3)}
-                  </h2>
-                );
-              if (line.startsWith("### "))
-                return (
-                  <h3 key={i} style={{ fontSize: "1.2rem", marginTop: "1.5rem", color: "var(--color-site-white)" }}>
-                    {line.slice(4)}
-                  </h3>
-                );
-              if (line.startsWith("> "))
-                return (
-                  <blockquote key={i} className="prose-game">
-                    {line.slice(2)}
-                  </blockquote>
-                );
-              if (line.startsWith("- "))
-                return (
-                  <li key={i} style={{ marginLeft: "1.5rem", marginBottom: "0.25rem", color: "rgba(236, 232, 225, 0.85)" }}>
-                    {line.slice(2)}
-                  </li>
-                );
-              if (line.startsWith("---")) return <hr key={i} className="prose-game" />;
-              if (line.startsWith("*") && line.endsWith("*") && line.length > 2)
-                return (
-                  <p key={i} style={{ fontSize: "0.875rem", color: "var(--color-site-muted)", fontStyle: "italic" }}>
-                    {line.slice(1, -1)}
-                  </p>
-                );
-              if (line.trim() === "") return <br key={i} />;
-              return (
-                <p
-                  key={i}
-                  dangerouslySetInnerHTML={{
-                    __html: line
-                      .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-                      .replace(/`(.+?)`/g, `<code style="background:var(--color-site-card);padding:0.1rem 0.4rem;font-size:0.875em;color:var(--color-val-red);">$1</code>`),
-                  }}
-                />
-              );
-            })}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              components={{
+                /* eslint-disable @typescript-eslint/no-unused-vars */
+                img: ({ node, ...props }) => (
+                  <div style={{ position: "relative", width: "100%", margin: "2.5rem 0", borderRadius: "12px", overflow: "hidden" }}>
+                    {/* fallback image styling */}
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      {...props}
+                      alt={props.alt || "Cikk kép"}
+                      style={{ width: "100%", height: "auto", display: "block", borderRadius: "12px", boxShadow: "0 10px 30px rgba(0,0,0,0.5)" }}
+                    />
+                  </div>
+                ),
+                h2: ({ node, ...props }) => <h2 style={{ fontSize: "2rem", marginTop: "2.5rem", borderBottom: "1px solid var(--color-site-border)", paddingBottom: "0.5rem" }} {...props} />,
+                h3: ({ node, ...props }) => <h3 style={{ fontSize: "1.5rem", marginTop: "2rem", color: "var(--color-site-white)" }} {...props} />,
+                a: ({ node, ...props }) => <a style={{ color: "var(--color-val-red)", textDecoration: "underline" }} target="_blank" rel="noopener noreferrer" {...props} />,
+                blockquote: ({ node, ...props }) => <blockquote className="prose-game" {...props} />,
+                code: ({ node, ...props }) => <code style={{ background: "var(--color-site-card)", padding: "0.2rem 0.4rem", borderRadius: "4px", fontSize: "0.875em", color: "var(--color-val-red)" }} {...props} />,
+                strong: ({ node, ...props }) => <strong style={{ color: "var(--color-site-white)", fontWeight: 700 }} {...props} />
+                /* eslint-enable @typescript-eslint/no-unused-vars */
+              }}
+            >
+              {article.content}
+            </ReactMarkdown>
           </div>
 
           {/* Newsletter Banner */}
