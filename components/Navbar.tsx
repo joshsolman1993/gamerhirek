@@ -24,8 +24,8 @@ export async function Navbar() {
         alignItems: "center",
         gap: "2rem",
       }}>
-        {/* Logo */}
-        <Link href="/" style={{ flexShrink: 0, textDecoration: "none" }}>
+        {/* Logo - Csak mobilon látszik */}
+        <Link href="/" style={{ flexShrink: 0, textDecoration: "none" }} className="nav-logo-mobile">
           <div style={{
             display: "flex",
             alignItems: "center",
@@ -47,45 +47,8 @@ export async function Navbar() {
           </div>
         </Link>
 
-        {/* Categories / Navigation */}
-        <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1, overflowX: "auto", paddingRight: "1rem" }} className="hide-scroll">
-          {[
-            { href: "/kategoria/esport", label: "Esport" },
-            { href: "/kategoria/hirek", label: "Hírek" },
-            { href: "/patch-notes", label: "Patch Notes" },
-            { href: "/kategoria/tippek-utmutatek", label: "Tipp & Útmutató" },
-            { href: "/tier-list", label: "📊 Tier List" },
-            { href: "/terkep-guides", label: "🗺️ Térképek", highlight: true },
-            { href: "/napirend", label: "🗓️ Napirend", highlight: true },
-            { href: "/pro-scene", label: "🏆 Pro Scene", highlight: true },
-            { href: "/pro-scene/pickem", label: "🔮 Pick'em", highlight: true },
-            { href: "/kozosseg", label: "👥 Közösség", highlight: true },
-            { href: "/guilds", label: "🛡️ Klánok", highlight: true },
-            { href: "/lfg", label: "💬 LFG", highlight: true },
-            { href: "/chat", label: "🍻 Kocsma", highlight: true },
-            { href: "/trivia", label: "🧠 Trivia", highlight: true },
-            { href: "/stats", label: "📊 Stats", highlight: true },
-          ].map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 600,
-                fontSize: "0.875rem",
-                letterSpacing: "0.06em",
-                textTransform: "uppercase",
-                color: (item as { highlight?: boolean }).highlight ? "var(--color-esport-teal)" : "var(--color-site-muted)",
-                padding: "0.375rem 0.75rem",
-                transition: "color 0.2s ease",
-                whiteSpace: "nowrap",
-              }}
-              className="nav-link"
-            >
-              {item.label}
-            </Link>
-          ))}
-        </div>
+        {/* Space filler where links used to be */}
+        <div style={{ flex: 1 }} />
 
         {/* Right side */}
         <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", flexShrink: 0 }}>

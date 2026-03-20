@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
+import { Sidebar } from "@/components/Sidebar";
 import { Footer } from "@/components/Footer";
 import { NewsTicker } from "@/components/NewsTicker";
 
@@ -27,10 +28,15 @@ export default function RootLayout({
   return (
     <html lang="hu">
       <body>
-        <Navbar />
-        <NewsTicker />
-        <main>{children}</main>
-        <Footer />
+        <div style={{ display: "flex", minHeight: "100vh" }}>
+          <Sidebar />
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", minWidth: 0, overflowX: "hidden" }}>
+            <Navbar />
+            <NewsTicker />
+            <main style={{ flex: 1 }}>{children}</main>
+            <Footer />
+          </div>
+        </div>
       </body>
     </html>
   );

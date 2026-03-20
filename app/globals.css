@@ -408,3 +408,9 @@ a {
     grid-template-columns: 1fr !important;
   }
 }
+
+@media screen and (min-width: 1025px) {
+  .nav-logo-mobile {
+    display: none !important;
+  }
+}
