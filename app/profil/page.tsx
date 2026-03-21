@@ -6,6 +6,7 @@ import Image from "next/image";
 import { Trophy, Shield, Activity, Calendar, LogOut, Coins } from "lucide-react";
 import { userLogoutAction } from "@/actions/user-auth";
 import { TeamSelector } from "@/components/profile/TeamSelector";
+import { RiotSyncCard } from "@/components/profile/RiotSyncCard";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -125,6 +126,13 @@ export default async function ProfilPage() {
       </header>
 
       <TeamSelector currentTeam={user.favoriteTeam} changedAt={user.favoriteTeamChangedAt} />
+
+      <RiotSyncCard 
+        riotId={user.riotId} 
+        riotRank={user.riotRank} 
+        riotLevel={user.riotLevel} 
+        lastSync={user.lastRiotSync} 
+      />
 
       {/* ── ACHIEVEMENTS ── */}
       <section>

@@ -30,7 +30,8 @@ export default async function LFGPage() {
       user: {
         select: {
           name: true,
-          avatarUrl: true
+          avatarUrl: true,
+          riotRank: true
         }
       }
     },
@@ -98,8 +99,8 @@ export default async function LFGPage() {
 
                   {/* Badges / Tags */}
                   <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", justifyContent: "flex-end" }}>
-                    <span style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--color-site-border)", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--color-site-white)" }}>
-                      <Medal size={14} style={{ color: "var(--color-val-red)" }}/> {post.rank}
+                    <span style={{ background: post.user.riotRank ? "rgba(0, 255, 127, 0.1)" : "rgba(255,255,255,0.05)", border: post.user.riotRank ? "1px solid #00FF7F" : "1px solid var(--color-site-border)", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: "0.25rem", color: post.user.riotRank ? "#00FF7F" : "var(--color-site-white)", fontWeight: post.user.riotRank ? 700 : 400 }}>
+                      <Medal size={14} style={{ color: post.user.riotRank ? "#00FF7F" : "var(--color-val-red)" }}/> {post.user.riotRank ? `${post.user.riotRank} (Hitelesítve)` : post.rank}
                     </span>
                     <span style={{ background: "rgba(255,255,255,0.05)", border: "1px solid var(--color-site-border)", padding: "0.25rem 0.5rem", borderRadius: "4px", fontSize: "0.75rem", display: "flex", alignItems: "center", gap: "0.25rem", color: "var(--color-site-white)" }}>
                       <Users size={14} style={{ color: "var(--color-esport-teal)" }}/> {post.roles}
