@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { verifyAndSyncRiotAccount, unlinkRiotAccount } from "@/actions/riot";
-import { Link, RefreshCw, XCircle, CheckCircle } from "lucide-react";
+import { Link, RefreshCw, CheckCircle } from "lucide-react";
 
 type Props = {
   riotId: string | null;

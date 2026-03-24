@@ -54,8 +54,8 @@ export async function verifyAndSyncRiotAccount(riotIdFull: string) {
 
     revalidatePath("/profil");
     return { success: true };
-  } catch (error: any) {
-    if (error.message === "HIÁNYZÓ_API_KULCS") {
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "HIÁNYZÓ_API_KULCS") {
       return { error: "Rendszerhiba: Nincs beállítva (vagy érvénytelen) a HENRIK_API_KEY a szerveren. Kérlek csinálj egy ingyenes kulcsot a henrikdev.xyz oldalon és tedd az .env fájlba!" };
     }
     console.error("Hiba a Riot szinkronizáció során:", error);

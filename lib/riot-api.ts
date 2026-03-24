@@ -37,8 +37,8 @@ export async function getRiotAccount(name: string, tag: string): Promise<RiotAcc
     if (data.status !== 200) return null;
 
     return data.data as RiotAccountData;
-  } catch (error: any) {
-    if (error.message === "HIÁNYZÓ_API_KULCS") throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "HIÁNYZÓ_API_KULCS") throw error;
     console.error("Hiba a Riot Account lekérésekor:", error);
     return null;
   }
@@ -67,8 +67,8 @@ export async function getRiotMMR(region: string, name: string, tag: string): Pro
     if (data.status !== 200) return null;
 
     return data.data as RiotMMRData;
-  } catch (error: any) {
-    if (error.message === "HIÁNYZÓ_API_KULCS") throw error;
+  } catch (error: unknown) {
+    if (error instanceof Error && error.message === "HIÁNYZÓ_API_KULCS") throw error;
     console.error("Hiba a Riot MMR lekérésekor:", error);
     return null;
   }
