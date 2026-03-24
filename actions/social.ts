@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { addXP } from "@/lib/xp";
 
 // ========================
 // 1. KÖVETÉS (FOLLOWING)
@@ -145,7 +146,7 @@ export async function toggleCommentUpvote(commentId: string) {
     // Nem kötelező visszavenni XP-t de opcionálisan meg lehet tenni
     const com = await db.comment.findUnique({ where: { id: commentId } });
     if (com?.userId) {
-      await db.user.update({ where: { id: com.userId }, data: { xp: { decrement: 2 } } });
+      await addXP(com.userId, -2);
     }
   } else {
     await db.upvote.create({
@@ -155,7 +156,7 @@ export async function toggleCommentUpvote(commentId: string) {
     // Adjuk meg az XP-t a komment írójának (RP pontszám)
     const com = await db.comment.findUnique({ where: { id: commentId } });
     if (com?.userId && com.userId !== session.id) {
-      await db.user.update({ where: { id: com.userId }, data: { xp: { increment: 2 } } });
+      await addXP(com.userId, 2);
     }
   }
 

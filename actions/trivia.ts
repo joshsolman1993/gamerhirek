@@ -4,6 +4,7 @@ import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { checkAndAwardAchievements } from "./achievements";
+import { calculateLevel } from "@/lib/xp";
 
 export async function getActiveQuiz() {
   const quiz = await db.quiz.findFirst({
@@ -79,16 +80,12 @@ export async function submitQuizAttempt(quizId: string, userAnswers: Record<stri
       // Update user XP
       const user = await tx.user.findUnique({ where: { id: session.id } });
       if (user) {
-        let newXp = user.xp + xpAwarded;
-        let newLevel = user.level;
-
-        // Simple level logic (from earlier codebase context): Level = floor(cbrt(XP / 100)) or similar
-        // Let's use what we know, or just simple milestone logic: each 100 XP = 1 lvl
-        newLevel = Math.floor(newXp / 500) + 1;
+        const newXp = user.xp + xpAwarded;
+        const { currentLevel } = calculateLevel(newXp);
 
         await tx.user.update({
           where: { id: session.id },
-          data: { xp: newXp, level: newLevel },
+          data: { xp: newXp, level: currentLevel },
         });
       }
     });

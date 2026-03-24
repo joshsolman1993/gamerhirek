@@ -19,7 +19,7 @@ export default async function ShopPage() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/admin/login?next=/shop");
+    redirect("/login?next=/shop");
   }
 
   const user = await db.user.findUnique({
@@ -30,7 +30,7 @@ export default async function ShopPage() {
   });
 
   if (!user) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   const shopItems = await db.shopItem.findMany({

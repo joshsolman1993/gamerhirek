@@ -1,6 +1,7 @@
 "use server";
 
 import { db } from "@/lib/db";
+import { addXP } from "@/lib/xp";
 
 // Definitions of the automated badges
 const BADGES = [
@@ -97,13 +98,7 @@ export async function checkAndAwardAchievements(userId: string) {
 
     // Update user stats if new xp was earned
     if (newlyAwarded > 0) {
-       const newXp = user.xp + earnedXp;
-       const newLevel = Math.max(user.level, Math.floor(newXp / 500) + 1);
-       
-       await db.user.update({
-         where: { id: userId },
-         data: { xp: newXp, level: newLevel }
-       });
+       await addXP(userId, earnedXp);
     }
 
   } catch (err) {

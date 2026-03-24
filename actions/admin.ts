@@ -3,6 +3,7 @@
 import { db } from "@/lib/db";
 import { getSession } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
+import { addXP } from "@/lib/xp";
 
 async function verifyAdmin() {
   const session = await getSession();
@@ -94,7 +95,7 @@ export async function createMatch(data: {
       teamB: data.teamB,
       format: data.format,
       startTime: new Date(data.startTime),
-      status: "UPCOMING",
+      status: "SCHEDULED",
     },
   });
   revalidatePath("/admin/matches");
@@ -110,10 +111,10 @@ export async function updateMatchResult(matchId: string, winner: string) {
   });
 
   // E-sport Phase 10: Reward fans of the winning team with extra XP
-  await db.user.updateMany({
-    where: { favoriteTeam: winner },
-    data: { xp: { increment: 100 } }
-  });
+  const fans = await db.user.findMany({ where: { favoriteTeam: winner } });
+  for (const fan of fans) {
+    await addXP(fan.id, 100);
+  }
 
   revalidatePath("/admin/matches");
   revalidatePath("/pro-scene/pickem");

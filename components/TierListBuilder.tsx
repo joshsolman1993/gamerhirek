@@ -7,7 +7,9 @@ import { SortableItem } from "./SortableItem";
 import { DroppableRow } from "./DroppableRow";
 import { AGENTS, TIER_ROWS, type ValorantAgent } from "@/lib/agents";
 import Image from "next/image";
-import { Save, Share2, RefreshCw } from "lucide-react";
+import { Save, Share2, RefreshCw, Loader2 } from "lucide-react";
+import { saveTierList } from "@/actions/tierlists";
+import { useRouter } from "next/navigation";
 
 type ItemsMap = Record<string, ValorantAgent[]>;
 
@@ -19,6 +21,8 @@ export function TierListBuilder() {
   });
 
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const router = useRouter();
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -95,6 +99,26 @@ export function TierListBuilder() {
     setItems(initial);
   }
 
+  async function handleSave() {
+    setIsSaving(true);
+    try {
+      const title = prompt("Mi legyen a Tier List neve?", "Saját Tier Listem") || "Saját Tier Listem";
+      const res = await saveTierList(items, title);
+      if (res.success) {
+        alert("Sikeres mentés! Most már megoszthatod a linket.");
+        router.push(`/tier-list/${res.id}`);
+      }
+    } catch (err) {
+      alert("Hiba történt a mentés során.");
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+  function handleShare() {
+    alert("Kérlek előbb mentsd el a Tier Listet, utána fogod tudni lemásolni a megosztó linkjét az URL sávból!");
+  }
+
   return (
     <div>
       {/* TOOLBAR */}
@@ -102,11 +126,12 @@ export function TierListBuilder() {
         <button onClick={resetTiers} className="admin-btn-secondary" style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
           <RefreshCw size={16} /> Újrakezdés
         </button>
-        <button className="admin-btn-secondary" style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "var(--color-site-card)" }}>
+        <button onClick={handleShare} className="admin-btn-secondary" style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "var(--color-site-card)" }}>
           <Share2 size={16} /> Megosztás
         </button>
-        <button className="admin-btn-primary" style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "var(--color-esport-teal)", color: "#000", border: "none" }}>
-          <Save size={16} /> Mentés Galériába
+        <button onClick={handleSave} disabled={isSaving} className="admin-btn-primary" style={{ display: "flex", alignItems: "center", gap: "0.5rem", background: "var(--color-esport-teal)", color: "#000", border: "none", opacity: isSaving ? 0.7 : 1 }}>
+          {isSaving ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />} 
+          Mentés Galériába
         </button>
       </div>
 

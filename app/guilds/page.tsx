@@ -39,7 +39,7 @@ export default async function GuildsPage() {
             <PlusCircle size={20} /> Új Klán Alapítása
           </Link>
         ) : (
-          <Link href="/admin/login?next=/guilds" className="admin-btn-secondary">
+          <Link href="/login?next=/guilds" className="admin-btn-secondary">
             Jelentkezz be klán alapításhoz
           </Link>
         )}

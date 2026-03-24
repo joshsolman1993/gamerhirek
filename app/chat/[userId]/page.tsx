@@ -19,7 +19,7 @@ export default async function DirectMessagePage({ params }: { params: Promise<{ 
   const session = await getSession();
   
   if (!session?.id) {
-    redirect("/admin/login?next=/chat/" + resolvedParams.userId);
+    redirect("/login?next=/chat/" + resolvedParams.userId);
   }
 
   const targetUser = await db.user.findUnique({

@@ -11,7 +11,7 @@ export function JoinGuildButton({ guildId, isMember, isAuthenticated }: { guildI
 
   const handleToggle = async () => {
     if (!isAuthenticated) {
-      router.push("/admin/login?next=/guilds/" + guildId);
+      router.push("/login?next=/guilds/" + guildId);
       return;
     }
 

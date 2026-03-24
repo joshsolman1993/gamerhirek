@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { calculateLevel } from "@/lib/xp";
 import { redirect } from "next/navigation";
 import Image from "next/image";
-import { Trophy, Shield, Activity, Calendar, LogOut, Coins } from "lucide-react";
+import { Trophy, Shield, Activity, Calendar, LogOut, Coins, Package } from "lucide-react";
 import { userLogoutAction } from "@/actions/user-auth";
 import { TeamSelector } from "@/components/profile/TeamSelector";
 import { RiotSyncCard } from "@/components/profile/RiotSyncCard";
@@ -23,7 +23,7 @@ export default async function ProfilPage() {
   const session = await getSession();
 
   if (!session) {
-    redirect("/admin/login?next=/profil");
+    redirect("/login?next=/profil");
   }
 
   const user = await db.user.findUnique({
@@ -35,11 +35,14 @@ export default async function ProfilPage() {
       articles: {
         select: { id: true },
       },
+      purchases: {
+        include: { shopItem: true },
+      },
     },
   });
 
   if (!user) {
-    redirect("/admin/login");
+    redirect("/login");
   }
 
   const { currentLevel, progress, nextThreshold } = calculateLevel(user.xp);
@@ -133,6 +136,25 @@ export default async function ProfilPage() {
         riotLevel={user.riotLevel} 
         lastSync={user.lastRiotSync} 
       />
+
+      {/* ── INVENTORY ── */}
+      {user.purchases.length > 0 && (
+        <section style={{ marginBottom: "3rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1.5rem" }}>
+            <Package style={{ color: "var(--color-esport-teal)" }} size={24} />
+            <h2 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "1.5rem", textTransform: "uppercase", margin: 0 }}>Raktárkészlet</h2>
+          </div>
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", background: "rgba(255,255,255,0.02)", border: "1px solid var(--color-site-border)", borderRadius: "8px", padding: "1.5rem" }}>
+            {user.purchases.map(p => (
+              <div key={p.id} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.5rem", background: "var(--color-site-card)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "8px", padding: "1rem", minWidth: "120px" }}>
+                <span style={{ fontSize: "2rem" }}>{p.shopItem.imageUrl || "✨"}</span>
+                <span style={{ fontFamily: "var(--font-display)", fontSize: "0.875rem", fontWeight: 700, textTransform: "uppercase" }}>{p.shopItem.name}</span>
+                <span style={{ fontSize: "0.75rem", color: "var(--color-site-muted)" }}>{p.shopItem.type}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ── ACHIEVEMENTS ── */}
       <section>
